@@ -12,9 +12,9 @@ export class UserController {
     return await this.usersService.getall();
   }
   
-  @Get(':id')
-  getById(@Param('id') id:string):Promise<User>{
-    return this.usersService.getById(id);
+  @Post()
+  getByEmail(@Body() body:any):Promise<User>{
+    return this.usersService.getByEmail(body.email);
   }
 
   @Post()

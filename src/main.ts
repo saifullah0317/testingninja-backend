@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { CorsOptions } from 'cors';
@@ -24,7 +25,10 @@ async function bootstrap() {
   //   );
   //   next();
   // });
-  app.enableCors();
+  app.enableCors({
+    origin:true,
+    credentials:true,
+  });
   await app.listen(8080);
 }
 bootstrap();

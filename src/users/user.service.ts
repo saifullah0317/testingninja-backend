@@ -18,10 +18,10 @@ export class UsersService {
     return createdUser.save();
   }
 
-  async getById(id:string): Promise<User> {
-    const userData=await this.userModel.findById(id).exec();
+  async getByEmail(email:string): Promise<User> {
+    const userData=await this.userModel.findOne({email:email});
     if(!userData){
-        throw new NotFoundException(`User ${id} not found...!`);
+        throw new NotFoundException(`User ${email} not found...!`);
     }
     return userData;
   }
