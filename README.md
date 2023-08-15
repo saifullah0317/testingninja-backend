@@ -1,3 +1,12 @@
+1. remove populate from services, where not required
+2. remove methods from controllers where not required and only service methods required
+3. uniqueness of required properties mongoose
+4. jwt auth using cookies
+
+
+
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>

@@ -5,8 +5,8 @@ import { User } from './user.shema';
 
 @Schema()
 export class Test {
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  username: User;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  userid: User;
 
   @Prop()
   title: string;

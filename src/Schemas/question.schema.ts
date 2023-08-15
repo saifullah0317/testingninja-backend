@@ -6,10 +6,7 @@ import { Test } from './test.shema';
 @Schema()
 export class Question {
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Test' })
-    test: Test;
-
-    @Prop()
-    isMcq: boolean;
+    testid: Test;
 
     @Prop()
     question: string[];

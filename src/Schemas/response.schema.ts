@@ -7,10 +7,10 @@ import { Question } from './question.schema';
 @Schema()
 export class Response {
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Attempter' })
-    attempter: Attempter;
+    attempterid: Attempter;
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Question' })
-    question: Question;
+    questionid: Question;
 
     @Prop()
     response: string;

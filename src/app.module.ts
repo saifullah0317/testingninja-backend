@@ -2,12 +2,17 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './users/user.module';
-import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
+import { TestModule } from './tests/test.module';
+import { ConfigModule } from '@nestjs/config';
+import { QuestionModule } from './questions/question.module';
+import { AttempterModule } from './attempters/attempter.module';
+import { ResponseModule } from './responses/response.module';
+import { ResultModule } from './results/result.module';
 
 @Module({
-  imports: [UsersModule, AuthModule, MongooseModule.forRoot('mongodb+srv://appserver:Tube%401light@testingninja.t105xmn.mongodb.net/Testingninja?retryWrites=true&w=majority')],
-  controllers: [AppController],
+  imports: [UsersModule, TestModule, QuestionModule, AttempterModule, ResponseModule, ResultModule, AuthModule, ConfigModule.forRoot(), MongooseModule.forRoot(process.env.MONGO_URI)],
+  controllers: [],
   providers: [],
 })
 export class AppModule {}

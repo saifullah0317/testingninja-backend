@@ -4,7 +4,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 @Schema()
 export class Attempter {
   @Prop()
-  id: string;
+  email:string;
 }
 
 export const AttempterSchema = SchemaFactory.createForClass(Attempter);
