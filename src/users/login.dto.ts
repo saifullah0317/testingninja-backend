@@ -1,13 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { IsString, IsEmail } from "class-validator"
 
-export class UserDto{
-    @IsString()
-    orgName:string;
-
-    @IsString()
-    username:string;
-
+export class LoginDto{
     @IsEmail()
     email:string;
 

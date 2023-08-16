@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import * as cookieParser from 'cookie-parser';
 import { CorsOptions } from 'cors';
 import { ExpressAdapter } from '@nestjs/platform-express';
 
@@ -29,6 +30,7 @@ async function bootstrap() {
     origin:true,
     credentials:true,
   });
+  app.use(cookieParser());
   await app.listen(8080);
 }
 bootstrap();
