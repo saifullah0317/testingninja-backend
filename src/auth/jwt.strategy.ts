@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Request as RequestType } from 'express';
 import { Injectable } from '@nestjs/common';
 
-export const JwtSecretTMP = 'secretKey';
+// export const JwtSecretTMP = process.env.JWT_SECRET;
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -14,7 +14,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         ExtractJwt.fromAuthHeaderAsBearerToken(),
       ]),
       ignoreExpiration: false,
-      secretOrKey: JwtSecretTMP,
+      secretOrKey: process.env.JWT_SECRET,
     });
   }
 

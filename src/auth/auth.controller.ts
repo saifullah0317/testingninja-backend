@@ -13,24 +13,31 @@ export class AuthController {
   @Post('login')
   async login(@Body(new ValidationPipe()) body:LoginDto, @Res({ passthrough: true }) res) {
     // const payload = { username: 'john', id: 1 };
-    res.cookie('user_token', this.jwtService.sign(body), {
+    const userId=await this.userService.login(body);
+    if(!userId){
+      return {message:"Invalid credentials!"}
+    }
+    const token= this.jwtService.sign(userId);
+    res.cookie('user_token',token, {
       expires: new Date(Date.now() + 3600000),
     });
-    return {};
+    return {token};
   }
 
   @Post('signup')
   async signup(@Body(new ValidationPipe()) body:UserDto, @Res({ passthrough: true }) res){
     const user=await this.userService.add(body);
-    res.cookie('user_token', this.jwtService.sign(body), {
+    // const {password,...payload}=user;
+    const token=this.jwtService.sign({userId:user._id});
+    res.cookie('user_token', token, {
       expires: new Date(Date.now() + 3600000),
     });
-    return {};
+    return {token};
   }
 
   @Get('logout')
   async logout(@Res({ passthrough: true }) res) {
     res.cookie('user_token', '', { expires: new Date(Date.now()) });
-    return {};
+    return {message:"loggedout!"};
   }
 }
