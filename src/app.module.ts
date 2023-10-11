@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { MongooseModule } from '@nestjs/mongoose' ;
 import { UsersModule } from './users/user.module';
 import { AuthModule } from './auth/auth.module';
 import { TestModule } from './tests/test.module';
