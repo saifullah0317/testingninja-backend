@@ -2,9 +2,9 @@
 import { Model } from 'mongoose';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from 'src/Schemas/user.shema';
+import { User } from 'src/Schemas/user.schema';
 import { UserDto } from './user.dto';
-import { UserInterface } from 'src/Schemas/user.shema';
+import { UserInterface } from 'src/Schemas/user.schema';
 
 @Injectable()
 export class UsersService {

@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { IsString } from "class-validator"
+import { IsString, IsNumber } from "class-validator"
 
 export class TestDto{
     @IsString()
@@ -13,4 +13,13 @@ export class TestDto{
 
     @IsString()
     prompt:string;
+
+    @IsNumber()
+    mcqs:number;
+
+    @IsNumber()
+    questions:number;
+
+    @IsNumber()
+    problems:number;
 }

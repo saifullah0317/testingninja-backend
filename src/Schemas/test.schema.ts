@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
-import { User } from './user.shema';
+import { User } from './user.schema';
 
 @Schema()
 export class Test {
@@ -16,6 +16,15 @@ export class Test {
 
   @Prop()
   prompt: string;
+
+  @Prop()
+  mcqs:number;
+
+  @Prop()
+  questions:number;
+
+  @Prop()
+  problems:number;
 }
 
 export const TestSchema = SchemaFactory.createForClass(Test);

@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Get, Param, Post, Put, ValidationPipe, UseGuards, Req } from '@nestjs/common';
 import { TestService } from './test.service';
-import { Test } from 'src/Schemas/test.shema';
+import { Test } from 'src/Schemas/test.schema';
 import { TestDto } from './test.dto';
 import { JwtGuard } from 'src/auth/guards';
 import { ExtractUser } from 'src/auth/auth.guard';

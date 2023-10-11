@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from 'src/Schemas/user.shema';
+import { User, UserSchema } from 'src/Schemas/user.schema';
 import { UserController } from './user.controller';
 import { UsersService } from './user.service';
 

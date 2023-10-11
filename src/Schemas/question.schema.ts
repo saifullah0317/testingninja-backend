@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
-import { Test } from './test.shema';
+import { Test } from './test.schema';
 
 @Schema()
 export class Question {
