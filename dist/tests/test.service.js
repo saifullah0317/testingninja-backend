@@ -17,7 +17,6 @@ const mongoose_1 = require("mongoose");
 const common_1 = require("@nestjs/common");
 const mongoose_2 = require("@nestjs/mongoose");
 const test_schema_1 = require("../Schemas/test.schema");
-const openai_1 = require("openai");
 const question_service_1 = require("../questions/question.service");
 let TestService = class TestService {
     constructor(testModel, questionService) {
@@ -27,17 +26,20 @@ let TestService = class TestService {
     async getall() {
         return await this.testModel.find().populate('userid').exec();
     }
+    async generateString(length) {
+        let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = ' ';
+        const charactersLength = characters.length;
+        for (let i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    }
     async add(createTestDto) {
-        const openai = new openai_1.default({
-            apiKey: process.env["OPENAI_API_KEY"]
-        });
-        const completion = await openai.chat.completions.create({
-            messages: [{ role: 'user', content: `Generate a skill test related to the prompt: "${createTestDto.prompt}". There should be ${createTestDto.mcqs} MCQs, ${createTestDto.questions} theoretical questions, ${createTestDto.problems} problem solving questions. Your response should be an array of objects containing each question. Object of MCQ must be like {"q":"this is the question","o1":"option1","o2":"option2","o3":"option3","o4":"option4"} and other question's objects should be just like {"q":"this is the question"}. Just return me array of these objects nothing else !` }],
-            model: 'gpt-3.5-turbo',
-        });
-        let response = completion.choices[0].message.content;
-        console.log("response: ", response);
-        const createdTest = new this.testModel(createTestDto);
+        let gottenTest = JSON.parse(JSON.stringify(createTestDto));
+        let key = await this.generateString(6);
+        gottenTest.key = key;
+        const createdTest = new this.testModel(gottenTest);
         return createdTest.save();
     }
     async getByUserid(userid) {

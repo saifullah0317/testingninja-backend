@@ -2,6 +2,7 @@ import * as mongoose from 'mongoose';
 import { User } from './user.schema';
 export declare class Test {
     userid: User;
+    key: string;
     title: string;
     description: string;
     prompt: string;

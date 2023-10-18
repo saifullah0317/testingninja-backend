@@ -7,7 +7,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Test } from 'src/Schemas/test.schema';
 // import { Question } from 'src/Schemas/question.schema';
 import { TestDto } from './test.dto';
-import OpenAI from 'openai';
+// import OpenAI from 'openai';
 import { QuestionService } from 'src/questions/question.service';
 
 
@@ -27,16 +27,33 @@ export class TestService {
     return await this.testModel.find().populate('userid').exec();
   }
 
+  async generateString(length) {
+    let characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let result = ' ';
+      const charactersLength = characters.length;
+      for ( let i = 0; i < length; i++ ) {
+          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+
+      return result;
+  }
+
   async add(createTestDto: TestDto): Promise<Test> {
-    const openai = new OpenAI({
-      apiKey: process.env["OPENAI_API_KEY"]
-    });
-    const completion = await openai.chat.completions.create({
-      messages: [{ role: 'user', content: `Generate a skill test related to the prompt: "${createTestDto.prompt}". There should be ${createTestDto.mcqs} MCQs, ${createTestDto.questions} theoretical questions, ${createTestDto.problems} problem solving questions. Your response should be an array of objects containing each question. Object of MCQ must be like {"q":"this is the question","o1":"option1","o2":"option2","o3":"option3","o4":"option4"} and other question's objects should be just like {"q":"this is the question"}. Just return me array of these objects nothing else !` }],
-      model: 'gpt-3.5-turbo',
-    });
-    let response=completion.choices[0].message.content;
-    console.log("response: ",response);
+    // const openai = new OpenAI({
+    //   apiKey: process.env["OPENAI_API_KEY"]
+    // });
+    // const completion = await openai.chat.completions.create({
+    //   messages: [{ role: 'user', content: `Generate a skill test related to the prompt: "${createTestDto.prompt}". There should be ${createTestDto.mcqs} MCQs, ${createTestDto.questions} theoretical questions, ${createTestDto.problems} problem solving questions. Your response should be an array of objects containing each question. Object of MCQ must be like {"q":"this is the question","o1":"option1","o2":"option2","o3":"option3","o4":"option4"} and other question's objects should be just like {"q":"this is the question"}. Just return me array of these objects nothing else !` }],
+    //   model: 'gpt-3.5-turbo',
+    // });
+    // let response=completion.choices[0].message.content;
+    // console.log("response: ",response);
+
+
+
+
+
+
     // console.log("parsed response: ",JSON.parse(response));
 
 
@@ -104,8 +121,10 @@ export class TestService {
     // const response=await chain.invoke(inputQuest);
     // console.log("response: ",response);
 
-
-    const createdTest = new this.testModel(createTestDto);
+    let gottenTest=JSON.parse(JSON.stringify(createTestDto))
+    let key:string=await this.generateString(6);
+    gottenTest.key=key;
+    const createdTest = new this.testModel(gottenTest);
     return createdTest.save();
   }
 

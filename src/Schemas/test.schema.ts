@@ -8,6 +8,9 @@ export class Test {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   userid: User;
 
+  @Prop({unique:true})
+  key:string;
+
   @Prop()
   title: string;
 

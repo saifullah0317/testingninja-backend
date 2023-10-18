@@ -9,7 +9,25 @@ export class Question {
     testid: Test;
 
     @Prop()
-    question: string[];
+    type:string;
+
+    @Prop()
+    question: string;
+
+    @Prop()
+    option1?:string;
+
+    @Prop()
+    option2?:string;
+
+    @Prop()
+    option3?:string;
+
+    @Prop()
+    option4?:string;
+    
+    @Prop()
+    mcqOption?:string;
 
     @Prop({required:false})
     suggestedAnswer: string[];

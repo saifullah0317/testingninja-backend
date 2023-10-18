@@ -9,8 +9,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.QuestionDto = void 0;
+exports.OtionalQuestionDto = exports.QuestionDto = void 0;
 const class_validator_1 = require("class-validator");
+const swagger_1 = require("@nestjs/swagger");
 class QuestionDto {
 }
 exports.QuestionDto = QuestionDto;
@@ -19,11 +20,18 @@ __decorate([
     __metadata("design:type", String)
 ], QuestionDto.prototype, "testid", void 0);
 __decorate([
-    (0, class_validator_1.ArrayMinSize)(1),
-    __metadata("design:type", Array)
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], QuestionDto.prototype, "type", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
 ], QuestionDto.prototype, "question", void 0);
 __decorate([
     (0, class_validator_1.ArrayMinSize)(0),
     __metadata("design:type", Array)
 ], QuestionDto.prototype, "suggestedAnswer", void 0);
+class OtionalQuestionDto extends (0, swagger_1.PartialType)(QuestionDto) {
+}
+exports.OtionalQuestionDto = OtionalQuestionDto;
 //# sourceMappingURL=question.dto.js.map

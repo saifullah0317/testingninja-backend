@@ -7,6 +7,7 @@ export declare class TestService {
     private readonly questionService;
     constructor(testModel: Model<Test>, questionService: QuestionService);
     getall(): Promise<Test[]>;
+    generateString(length: any): Promise<string>;
     add(createTestDto: TestDto): Promise<Test>;
     getByUserid(userid: string): Promise<any>;
 }

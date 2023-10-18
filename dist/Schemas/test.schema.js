@@ -21,6 +21,10 @@ __decorate([
     __metadata("design:type", user_schema_1.User)
 ], Test.prototype, "userid", void 0);
 __decorate([
+    (0, mongoose_1.Prop)({ unique: true }),
+    __metadata("design:type", String)
+], Test.prototype, "key", void 0);
+__decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
 ], Test.prototype, "title", void 0);

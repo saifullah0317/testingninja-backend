@@ -3,7 +3,7 @@ import { Model } from 'mongoose';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Question } from 'src/Schemas/question.schema';
-import { QuestionDto } from './question.dto';
+import {OtionalQuestionDto} from './question.dto'
 
 @Injectable()
 export class QuestionService {
@@ -19,9 +19,9 @@ export class QuestionService {
     }).exec();
   }
 
-  async add(createquestionDto: QuestionDto): Promise<Question> {
+  async add(createquestionDto: OtionalQuestionDto): Promise<Question> {
     const createdTest = new this.questionModel(createquestionDto);
-    return createdTest.save();
+    return (await createdTest.save()).populate('testid');
   }
 
   async getByTestid(testid:string): Promise<Question[]> {
@@ -35,7 +35,7 @@ export class QuestionService {
     return testData;
   }
 
-  async update(id:string,body:QuestionDto):Promise<Question>{
+  async update(id:string,body:OtionalQuestionDto):Promise<Question>{
     return await this.questionModel.findByIdAndUpdate(id,body,{new:true});
   }
 

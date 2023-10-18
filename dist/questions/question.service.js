@@ -32,7 +32,7 @@ let QuestionService = class QuestionService {
     }
     async add(createquestionDto) {
         const createdTest = new this.questionModel(createquestionDto);
-        return createdTest.save();
+        return (await createdTest.save()).populate('testid');
     }
     async getByTestid(testid) {
         const testData = await this.questionModel.find({ testid: testid }).populate({
