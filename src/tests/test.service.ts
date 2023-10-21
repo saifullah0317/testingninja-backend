@@ -1,14 +1,14 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable prefer-const */
 /* eslint-disable prettier/prettier */
-import { Model } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Test } from 'src/Schemas/test.schema';
 // import { Question } from 'src/Schemas/question.schema';
 import { TestDto } from './test.dto';
 // import OpenAI from 'openai';
-import { QuestionService } from 'src/questions/question.service';
+// import { QuestionService } from 'src/questions/question.service';
 
 
 // import {OpenAI} from "langchain/llms/openai";
@@ -20,16 +20,24 @@ import { QuestionService } from 'src/questions/question.service';
 export class TestService {
   constructor(
     @InjectModel(Test.name) private testModel: Model<Test>,
-    private readonly questionService:QuestionService,
+    // private readonly questionService:QuestionService,
   ) {}
 
   async getall():Promise<Test[]>{
     return await this.testModel.find().populate('userid').exec();
   }
 
+  async getByKey(testkey:string){
+    let tempObj={key:testkey}
+    console.log("tempObj: ",tempObj);
+    let test=await this.testModel.findOne(tempObj);
+    console.log("test in testService: ",test);
+    return test;
+  }
+
   async generateString(length) {
     let characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let result = ' ';
+      let result = '';
       const charactersLength = characters.length;
       for ( let i = 0; i < length; i++ ) {
           result += characters.charAt(Math.floor(Math.random() * charactersLength));

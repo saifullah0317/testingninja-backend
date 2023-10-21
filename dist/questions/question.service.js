@@ -17,9 +17,11 @@ const mongoose_1 = require("mongoose");
 const common_1 = require("@nestjs/common");
 const mongoose_2 = require("@nestjs/mongoose");
 const question_schema_1 = require("../Schemas/question.schema");
+const test_service_1 = require("../tests/test.service");
 let QuestionService = class QuestionService {
-    constructor(questionModel) {
+    constructor(questionModel, testService) {
         this.questionModel = questionModel;
+        this.testService = testService;
     }
     async getall() {
         return await this.questionModel.find().populate({
@@ -30,12 +32,27 @@ let QuestionService = class QuestionService {
             }
         }).exec();
     }
+    async getByKey(key) {
+        console.log("typeof key from service: ", typeof key);
+        const test = await this.testService.getByKey(key);
+        if (test) {
+            console.log("test from questionService: ", test);
+            let test_id = test._id;
+            console.log("testid: ", test_id);
+            const questions = await this.getByTestid(test_id);
+            return questions;
+        }
+        else {
+            return [];
+        }
+    }
     async add(createquestionDto) {
         const createdTest = new this.questionModel(createquestionDto);
         return (await createdTest.save()).populate('testid');
     }
-    async getByTestid(testid) {
-        const testData = await this.questionModel.find({ testid: testid }).populate({
+    async getByTestid(test_id) {
+        console.log("test_id: ", test_id);
+        const testData = await this.questionModel.find({ testid: test_id }).populate({
             path: 'testid',
             populate: {
                 path: 'userid',
@@ -55,6 +72,7 @@ exports.QuestionService = QuestionService;
 exports.QuestionService = QuestionService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_2.InjectModel)(question_schema_1.Question.name)),
-    __metadata("design:paramtypes", [mongoose_1.Model])
+    __metadata("design:paramtypes", [mongoose_1.Model,
+        test_service_1.TestService])
 ], QuestionService);
 //# sourceMappingURL=question.service.js.map

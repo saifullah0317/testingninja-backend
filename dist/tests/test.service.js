@@ -17,18 +17,23 @@ const mongoose_1 = require("mongoose");
 const common_1 = require("@nestjs/common");
 const mongoose_2 = require("@nestjs/mongoose");
 const test_schema_1 = require("../Schemas/test.schema");
-const question_service_1 = require("../questions/question.service");
 let TestService = class TestService {
-    constructor(testModel, questionService) {
+    constructor(testModel) {
         this.testModel = testModel;
-        this.questionService = questionService;
     }
     async getall() {
         return await this.testModel.find().populate('userid').exec();
     }
+    async getByKey(testkey) {
+        let tempObj = { key: testkey };
+        console.log("tempObj: ", tempObj);
+        let test = await this.testModel.findOne(tempObj);
+        console.log("test in testService: ", test);
+        return test;
+    }
     async generateString(length) {
         let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        let result = ' ';
+        let result = '';
         const charactersLength = characters.length;
         for (let i = 0; i < length; i++) {
             result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -51,7 +56,6 @@ exports.TestService = TestService;
 exports.TestService = TestService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_2.InjectModel)(test_schema_1.Test.name)),
-    __metadata("design:paramtypes", [mongoose_1.Model,
-        question_service_1.QuestionService])
+    __metadata("design:paramtypes", [mongoose_1.Model])
 ], TestService);
 //# sourceMappingURL=test.service.js.map

@@ -3,6 +3,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, ValidationPipe } from 
 import { QuestionService } from './question.service';
 import { Question } from 'src/Schemas/question.schema';
 import { QuestionDto } from './question.dto';
+import { ObjectId } from 'mongoose';
 @Controller('question')
 export class QuestionController {
   constructor(private readonly questionService: QuestionService) {}
@@ -15,10 +16,18 @@ export class QuestionController {
   
   // get test by testid
   @Get(':id')
-  async getByEmail(@Param('id') id:string):Promise<Question[]>{
+  async getByEmail(@Param('id') id:ObjectId):Promise<Question[]>{
     return await this.questionService.getByTestid(id);
+    // return await this.questionService.getByKey(id);
   }
 
+  @Get('key/:testkey')
+  async getByKey(@Param('testkey') testkey:string):Promise<Question[]>{
+    console.log("testkey: ",testkey);
+    console.log("typeof testkey: ",typeof testkey);
+    return await this.questionService.getByKey(testkey);
+  }
+ 
   // add a new test
   @Post()
   async add(@Body (new ValidationPipe()) body:QuestionDto):Promise<Question>{

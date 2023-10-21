@@ -26,6 +26,11 @@ let QuestionController = class QuestionController {
     async getByEmail(id) {
         return await this.questionService.getByTestid(id);
     }
+    async getByKey(testkey) {
+        console.log("testkey: ", testkey);
+        console.log("typeof testkey: ", typeof testkey);
+        return await this.questionService.getByKey(testkey);
+    }
     async add(body) {
         return await this.questionService.add(body);
     }
@@ -47,9 +52,16 @@ __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], QuestionController.prototype, "getByEmail", null);
+__decorate([
+    (0, common_1.Get)('key/:testkey'),
+    __param(0, (0, common_1.Param)('testkey')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], QuestionController.prototype, "getByKey", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)(new common_1.ValidationPipe())),
