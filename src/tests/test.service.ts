@@ -29,9 +29,9 @@ export class TestService {
 
   async getByKey(testkey:string){
     let tempObj={key:testkey}
-    console.log("tempObj: ",tempObj);
+    // console.log("tempObj: ",tempObj);
     let test=await this.testModel.findOne(tempObj);
-    console.log("test in testService: ",test);
+    // console.log("test in testService: ",test);
     return test;
   }
 

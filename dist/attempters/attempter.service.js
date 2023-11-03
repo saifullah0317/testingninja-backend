@@ -21,11 +21,8 @@ let AttempterService = class AttempterService {
     constructor(attempterModel) {
         this.attempterModel = attempterModel;
     }
-    async getall(query) {
-        if (query.email) {
-            return await this.attempterModel.find({ email: query.email });
-        }
-        return await this.attempterModel.find().exec();
+    async getbyEmail(email) {
+        return await this.attempterModel.findOne({ email: email });
     }
     async add(createattempterDto) {
         const createdAttempter = new this.attempterModel(createattempterDto);

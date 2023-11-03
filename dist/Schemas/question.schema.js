@@ -29,23 +29,23 @@ __decorate([
     __metadata("design:type", String)
 ], Question.prototype, "question", void 0);
 __decorate([
-    (0, mongoose_1.Prop)(),
+    (0, mongoose_1.Prop)({ required: false }),
     __metadata("design:type", String)
 ], Question.prototype, "option1", void 0);
 __decorate([
-    (0, mongoose_1.Prop)(),
+    (0, mongoose_1.Prop)({ required: false }),
     __metadata("design:type", String)
 ], Question.prototype, "option2", void 0);
 __decorate([
-    (0, mongoose_1.Prop)(),
+    (0, mongoose_1.Prop)({ required: false }),
     __metadata("design:type", String)
 ], Question.prototype, "option3", void 0);
 __decorate([
-    (0, mongoose_1.Prop)(),
+    (0, mongoose_1.Prop)({ required: false }),
     __metadata("design:type", String)
 ], Question.prototype, "option4", void 0);
 __decorate([
-    (0, mongoose_1.Prop)(),
+    (0, mongoose_1.Prop)({ required: false }),
     __metadata("design:type", String)
 ], Question.prototype, "mcqOption", void 0);
 __decorate([

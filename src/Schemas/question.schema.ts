@@ -14,23 +14,36 @@ export class Question {
     @Prop()
     question: string;
 
-    @Prop()
-    option1?:string;
+    @Prop({required:false})
+    option1:string;
 
-    @Prop()
-    option2?:string;
+    @Prop({required:false})
+    option2:string;
 
-    @Prop()
-    option3?:string;
+    @Prop({required:false})
+    option3:string;
 
-    @Prop()
-    option4?:string;
+    @Prop({required:false})
+    option4:string;
     
-    @Prop()
-    mcqOption?:string;
+    @Prop({required:false})
+    mcqOption:string;
 
     @Prop({required:false})
     suggestedAnswer: string[];
 }
 
 export const QuestionSchema = SchemaFactory.createForClass(Question);
+
+export interface QuestionInterface extends mongoose.Document{
+  _id:string,
+  testid:string,
+  type:string,
+  question:string,
+  option1?:string,
+  option2?:string,
+  option3?:string,
+  option4?:string,
+  mcqOption?:string,
+  suggestedAnswer:string[]
+}

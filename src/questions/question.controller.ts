@@ -23,8 +23,8 @@ export class QuestionController {
 
   @Get('key/:testkey')
   async getByKey(@Param('testkey') testkey:string):Promise<Question[]>{
-    console.log("testkey: ",testkey);
-    console.log("typeof testkey: ",typeof testkey);
+    // console.log("testkey: ",testkey);
+    // console.log("typeof testkey: ",typeof testkey);
     return await this.questionService.getByKey(testkey);
   }
  

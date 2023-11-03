@@ -22,4 +22,8 @@ export class TestDto{
 
     @IsNumber()
     problems:number;
+
+    isPost?:boolean;
+
+    time?:number;
 }

@@ -12,12 +12,15 @@ const mongoose_1 = require("@nestjs/mongoose");
 const response_schema_1 = require("../Schemas/response.schema");
 const response_controller_1 = require("./response.controller");
 const response_service_1 = require("./response.service");
+const attempter_module_1 = require("../attempters/attempter.module");
+const question_module_1 = require("../questions/question.module");
+const test_module_1 = require("../tests/test.module");
 let ResponseModule = class ResponseModule {
 };
 exports.ResponseModule = ResponseModule;
 exports.ResponseModule = ResponseModule = __decorate([
     (0, common_1.Module)({
-        imports: [mongoose_1.MongooseModule.forFeature([{ name: response_schema_1.Response.name, schema: response_schema_1.ResponseSchema }])],
+        imports: [attempter_module_1.AttempterModule, question_module_1.QuestionModule, test_module_1.TestModule, mongoose_1.MongooseModule.forFeature([{ name: response_schema_1.Response.name, schema: response_schema_1.ResponseSchema }])],
         controllers: [response_controller_1.ResponseController],
         providers: [response_service_1.ResponseService],
         exports: [response_service_1.ResponseService]

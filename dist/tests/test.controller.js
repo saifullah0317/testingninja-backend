@@ -23,8 +23,6 @@ let TestController = class TestController {
         this.testService = testService;
     }
     async getall(req) {
-        console.log('cookies: ', req.cookies);
-        console.log("user: ", req.user);
         return await this.testService.getall();
     }
     getByEmail(id) {

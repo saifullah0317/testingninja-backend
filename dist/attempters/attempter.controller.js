@@ -20,8 +20,10 @@ let AttempterController = class AttempterController {
     constructor(attempterService) {
         this.attempterService = attempterService;
     }
-    async getall(query) {
-        return await this.attempterService.getall(query);
+    async getbyEmail(query) {
+        if (query.email) {
+            return await this.attempterService.getbyEmail(query.email.toString());
+        }
     }
     async add(body) {
         return await this.attempterService.add(body);
@@ -34,7 +36,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], AttempterController.prototype, "getall", null);
+], AttempterController.prototype, "getbyEmail", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)(new common_1.ValidationPipe())),

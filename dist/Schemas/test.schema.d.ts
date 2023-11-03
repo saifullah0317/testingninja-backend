@@ -9,6 +9,8 @@ export declare class Test {
     mcqs: number;
     questions: number;
     problems: number;
+    isPost: boolean;
+    time: number;
 }
 export declare const TestSchema: mongoose.Schema<Test, mongoose.Model<Test, any, any, any, mongoose.Document<unknown, any, Test> & Test & {
     _id: mongoose.Types.ObjectId;

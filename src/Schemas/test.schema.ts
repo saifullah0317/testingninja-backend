@@ -28,6 +28,12 @@ export class Test {
 
   @Prop()
   problems:number;
+
+  @Prop({required:false})
+  isPost:boolean;
+
+  @Prop({required:false})
+  time:number;
 }
 
 export const TestSchema = SchemaFactory.createForClass(Test);

@@ -14,11 +14,11 @@ export class TestController {
   @UseGuards(ExtractUser)
   @Get()
   async getall(@Req() req):Promise<Test[]>{
-    console.log('cookies: ',req.cookies);
+    // console.log('cookies: ',req.cookies);
     // const userId=await this.jwtService.verifyAsync(req.cookies.user_token,{
     //   secret:process.env.JWT_SECRET
     // })
-    console.log("user: ",req.user);
+    // console.log("user: ",req.user);
     return await this.testService.getall();
   }
   

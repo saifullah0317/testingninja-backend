@@ -15,6 +15,10 @@ class UserDto {
 }
 exports.UserDto = UserDto;
 __decorate([
+    (0, class_validator_1.IsBoolean)(),
+    __metadata("design:type", Boolean)
+], UserDto.prototype, "userType", void 0);
+__decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], UserDto.prototype, "orgName", void 0);

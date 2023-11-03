@@ -15,7 +15,7 @@ let Attempter = class Attempter {
 };
 exports.Attempter = Attempter;
 __decorate([
-    (0, mongoose_1.Prop)(),
+    (0, mongoose_1.Prop)({ unique: true }),
     __metadata("design:type", String)
 ], Attempter.prototype, "email", void 0);
 exports.Attempter = Attempter = __decorate([

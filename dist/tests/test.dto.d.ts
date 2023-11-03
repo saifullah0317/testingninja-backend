@@ -6,4 +6,6 @@ export declare class TestDto {
     mcqs: number;
     questions: number;
     problems: number;
+    isPost?: boolean;
+    time?: number;
 }

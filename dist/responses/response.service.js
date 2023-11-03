@@ -17,9 +17,15 @@ const mongoose_1 = require("mongoose");
 const common_1 = require("@nestjs/common");
 const mongoose_2 = require("@nestjs/mongoose");
 const response_schema_1 = require("../Schemas/response.schema");
+const attempter_service_1 = require("../attempters/attempter.service");
+const question_service_1 = require("../questions/question.service");
+const test_service_1 = require("../tests/test.service");
 let ResponseService = class ResponseService {
-    constructor(responseModel) {
+    constructor(responseModel, attempterService, questionService, testService) {
         this.responseModel = responseModel;
+        this.attempterService = attempterService;
+        this.questionService = questionService;
+        this.testService = testService;
     }
     async get(query) {
         if (query.attempter && query.question) {
@@ -36,6 +42,27 @@ let ResponseService = class ResponseService {
             }).populate('attempterid');
         }
     }
+    async checkByAttempter(attempterKeyDto) {
+        const attempterFound = await this.attempterService.getbyEmail(attempterKeyDto.email);
+        if (!attempterFound) {
+            throw new common_1.NotFoundException();
+        }
+        const testFound = await this.testService.getByKey(attempterKeyDto.key);
+        if (!testFound) {
+            throw new common_1.NotFoundException();
+        }
+        const questionsFound = await this.questionService.getByTestid(testFound._id);
+        if (questionsFound.length == 0) {
+            throw new common_1.NotFoundException();
+        }
+        const responseFound = await this.responseModel.find({ attempterid: attempterFound._id, questionid: questionsFound[0]._id });
+        if (responseFound.length > 0) {
+            return { attempterid: "" };
+        }
+        else {
+            return { attempterid: attempterFound._id.toString() };
+        }
+    }
     async add(createquestionDto) {
         const createdTest = new this.responseModel(createquestionDto);
         return createdTest.save();
@@ -45,6 +72,9 @@ exports.ResponseService = ResponseService;
 exports.ResponseService = ResponseService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_2.InjectModel)(response_schema_1.Response.name)),
-    __metadata("design:paramtypes", [mongoose_1.Model])
+    __metadata("design:paramtypes", [mongoose_1.Model,
+        attempter_service_1.AttempterService,
+        question_service_1.QuestionService,
+        test_service_1.TestService])
 ], ResponseService);
 //# sourceMappingURL=response.service.js.map

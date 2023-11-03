@@ -33,12 +33,9 @@ let QuestionService = class QuestionService {
         }).exec();
     }
     async getByKey(key) {
-        console.log("typeof key from service: ", typeof key);
         const test = await this.testService.getByKey(key);
         if (test) {
-            console.log("test from questionService: ", test);
             let test_id = test._id;
-            console.log("testid: ", test_id);
             const questions = await this.getByTestid(test_id);
             return questions;
         }
@@ -51,14 +48,7 @@ let QuestionService = class QuestionService {
         return (await createdTest.save()).populate('testid');
     }
     async getByTestid(test_id) {
-        console.log("test_id: ", test_id);
-        const testData = await this.questionModel.find({ testid: test_id }).populate({
-            path: 'testid',
-            populate: {
-                path: 'userid',
-                model: 'User'
-            }
-        });
+        const testData = await this.questionModel.find({ testid: test_id });
         return testData;
     }
     async update(id, body) {

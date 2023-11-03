@@ -27,8 +27,6 @@ let QuestionController = class QuestionController {
         return await this.questionService.getByTestid(id);
     }
     async getByKey(testkey) {
-        console.log("testkey: ", testkey);
-        console.log("typeof testkey: ", typeof testkey);
         return await this.questionService.getByKey(testkey);
     }
     async add(body) {

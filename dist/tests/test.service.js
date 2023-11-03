@@ -26,9 +26,7 @@ let TestService = class TestService {
     }
     async getByKey(testkey) {
         let tempObj = { key: testkey };
-        console.log("tempObj: ", tempObj);
         let test = await this.testModel.findOne(tempObj);
-        console.log("test in testService: ", test);
         return test;
     }
     async generateString(length) {
