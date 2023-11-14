@@ -18,18 +18,22 @@ const test_service_1 = require("./test.service");
 const test_dto_1 = require("./test.dto");
 const guards_1 = require("../auth/guards");
 const auth_guard_1 = require("../auth/auth.guard");
+const auth_service_1 = require("../auth/auth.service");
 let TestController = class TestController {
-    constructor(testService) {
+    constructor(testService, authService) {
         this.testService = testService;
+        this.authService = authService;
     }
     async getall(req) {
-        return await this.testService.getall();
+        console.log('cookies from request: ', req.cookies);
+        let userid = await this.authService.getUseridByToken(req.cookies);
+        console.log("user: ", userid);
+        return await this.testService.getByUserid(userid);
     }
-    getByEmail(id) {
-        return this.testService.getByUserid(id);
-    }
-    add(body) {
-        return this.testService.add(body);
+    async add(body, req) {
+        let testToPost = JSON.parse(JSON.stringify(body));
+        testToPost.userid = await this.authService.getUseridByToken(req.cookies);
+        return this.testService.add(testToPost);
     }
 };
 exports.TestController = TestController;
@@ -43,21 +47,18 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], TestController.prototype, "getall", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
-], TestController.prototype, "getByEmail", null);
-__decorate([
+    (0, common_1.UseGuards)(guards_1.JwtGuard),
+    (0, common_1.UseGuards)(auth_guard_1.ExtractUser),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)(new common_1.ValidationPipe())),
+    __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [test_dto_1.TestDto]),
+    __metadata("design:paramtypes", [test_dto_1.TestDto, Object]),
     __metadata("design:returntype", Promise)
 ], TestController.prototype, "add", null);
 exports.TestController = TestController = __decorate([
     (0, common_1.Controller)('test'),
-    __metadata("design:paramtypes", [test_service_1.TestService])
+    __metadata("design:paramtypes", [test_service_1.TestService,
+        auth_service_1.AuthService])
 ], TestController);
 //# sourceMappingURL=test.controller.js.map

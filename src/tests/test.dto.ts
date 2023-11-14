@@ -1,10 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { IsString, IsNumber } from "class-validator"
+import { IsString, IsNumber, IsBoolean } from "class-validator"
 
 export class TestDto{
-    @IsString()
-    userid:string;
-
     @IsString()
     title:string;
 
@@ -23,7 +20,8 @@ export class TestDto{
     @IsNumber()
     problems:number;
 
-    isPost?:boolean;
+    @IsBoolean()
+    isPost:boolean;
 
     time?:number;
 }

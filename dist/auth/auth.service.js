@@ -9,38 +9,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ExtractUser = void 0;
+exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
-let ExtractUser = class ExtractUser {
+let AuthService = class AuthService {
     constructor(jwtService) {
         this.jwtService = jwtService;
     }
-    async canActivate(context) {
-        const request = context.switchToHttp().getRequest();
-        const token = request.cookies.user_token;
-        console.log("request.cookies: ", request.cookies);
-        if (!token) {
-            console.log("token not in cookies ...!");
+    async getUseridByToken(cookies) {
+        const obj = await this.jwtService.verifyAsync(cookies.user_token, {
+            secret: process.env.JWT_SECRET
+        });
+        if (obj.userId) {
+            return obj.userId;
+        }
+        else {
             throw new common_1.UnauthorizedException();
         }
-        try {
-            const payload = await this.jwtService.verifyAsync(token, {
-                secret: process.env.JWT_SECRET
-            });
-            console.log("payload in auth guard: ", payload);
-            request['user'] = payload;
-        }
-        catch (e) {
-            console.log("Invalid credentials ...!, error: ", e);
-            throw new common_1.UnauthorizedException();
-        }
-        return true;
     }
 };
-exports.ExtractUser = ExtractUser;
-exports.ExtractUser = ExtractUser = __decorate([
+exports.AuthService = AuthService;
+exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [jwt_1.JwtService])
-], ExtractUser);
-//# sourceMappingURL=auth.guard.js.map
+], AuthService);
+//# sourceMappingURL=auth.service.js.map

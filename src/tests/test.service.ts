@@ -7,6 +7,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Test } from 'src/Schemas/test.schema';
 // import { Question } from 'src/Schemas/question.schema';
 import { TestDto } from './test.dto';
+import { TestInterface } from 'src/Schemas/test.schema';
 // import OpenAI from 'openai';
 // import { QuestionService } from 'src/questions/question.service';
 
@@ -46,7 +47,7 @@ export class TestService {
       return result;
   }
 
-  async add(createTestDto: TestDto): Promise<Test> {
+  async add(createTestDto: TestInterface): Promise<Test> {
     // const openai = new OpenAI({
     //   apiKey: process.env["OPENAI_API_KEY"]
     // });
@@ -135,7 +136,6 @@ export class TestService {
     const createdTest = new this.testModel(gottenTest);
     return createdTest.save();
   }
-
   async getByUserid(userid:string): Promise<any> {
     const testData=await this.testModel.find({userid:userid}).populate('userid');
     return testData;

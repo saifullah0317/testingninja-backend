@@ -13,12 +13,13 @@ const test_schema_1 = require("../Schemas/test.schema");
 const test_controller_1 = require("./test.controller");
 const test_service_1 = require("./test.service");
 const jwt_1 = require("@nestjs/jwt");
+const auth_module_1 = require("../auth/auth.module");
 let TestModule = class TestModule {
 };
 exports.TestModule = TestModule;
 exports.TestModule = TestModule = __decorate([
     (0, common_1.Module)({
-        imports: [mongoose_1.MongooseModule.forFeature([{ name: test_schema_1.Test.name, schema: test_schema_1.TestSchema }])],
+        imports: [auth_module_1.AuthModule, mongoose_1.MongooseModule.forFeature([{ name: test_schema_1.Test.name, schema: test_schema_1.TestSchema }])],
         controllers: [test_controller_1.TestController],
         providers: [test_service_1.TestService, jwt_1.JwtService],
         exports: [test_service_1.TestService]

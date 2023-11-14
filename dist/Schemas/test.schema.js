@@ -49,7 +49,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Test.prototype, "problems", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: false }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", Boolean)
 ], Test.prototype, "isPost", void 0);
 __decorate([
@@ -57,7 +57,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Test.prototype, "time", void 0);
 exports.Test = Test = __decorate([
-    (0, mongoose_1.Schema)()
+    (0, mongoose_1.Schema)({ timestamps: true })
 ], Test);
 exports.TestSchema = mongoose_1.SchemaFactory.createForClass(Test);
 //# sourceMappingURL=test.schema.js.map

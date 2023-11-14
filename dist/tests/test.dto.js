@@ -17,10 +17,6 @@ exports.TestDto = TestDto;
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], TestDto.prototype, "userid", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
 ], TestDto.prototype, "title", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
@@ -42,4 +38,8 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], TestDto.prototype, "problems", void 0);
+__decorate([
+    (0, class_validator_1.IsBoolean)(),
+    __metadata("design:type", Boolean)
+], TestDto.prototype, "isPost", void 0);
 //# sourceMappingURL=test.dto.js.map

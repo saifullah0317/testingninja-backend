@@ -12,16 +12,19 @@ export class UsersService {
 
   async login(body):Promise<any>{
     const loggedinUser=await this.getByEmail(body.email);
+    console.log("LoggedinUser: ",loggedinUser);
     // if(!loggedinUser){
     //   return {message:"Invalid email!"}
     // }
     // const {password,...payload}=loggedinUser;
-    if(body.password!==loggedinUser.password){
+    if(body.password!=loggedinUser.password){
+      console.log("body.password: ",body.password);
+      console.log("loggedinUser.password: ",loggedinUser.password);
       // return {message:"Invalid password!"}
-      return false;
+      return {userId:""};
     }
     else{
-      return {userId:loggedinUser._id};
+      return {userId:loggedinUser._id.toString()};
     }
   }
 

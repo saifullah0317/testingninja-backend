@@ -24,7 +24,7 @@
 /// <reference types="mongoose/types/inferschematype" />
 import { Model } from 'mongoose';
 import { Test } from 'src/Schemas/test.schema';
-import { TestDto } from './test.dto';
+import { TestInterface } from 'src/Schemas/test.schema';
 export declare class TestService {
     private testModel;
     constructor(testModel: Model<Test>);
@@ -33,6 +33,6 @@ export declare class TestService {
         _id: import("mongoose").Types.ObjectId;
     }>;
     generateString(length: any): Promise<string>;
-    add(createTestDto: TestDto): Promise<Test>;
+    add(createTestDto: TestInterface): Promise<Test>;
     getByUserid(userid: string): Promise<any>;
 }

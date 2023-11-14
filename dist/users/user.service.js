@@ -23,11 +23,14 @@ let UsersService = class UsersService {
     }
     async login(body) {
         const loggedinUser = await this.getByEmail(body.email);
-        if (body.password !== loggedinUser.password) {
-            return false;
+        console.log("LoggedinUser: ", loggedinUser);
+        if (body.password != loggedinUser.password) {
+            console.log("body.password: ", body.password);
+            console.log("loggedinUser.password: ", loggedinUser.password);
+            return { userId: "" };
         }
         else {
-            return { userId: loggedinUser._id };
+            return { userId: loggedinUser._id.toString() };
         }
     }
     async getall() {

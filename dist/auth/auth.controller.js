@@ -24,12 +24,18 @@ let AuthController = class AuthController {
         this.userService = userService;
     }
     async login(body, res) {
+        console.log("login API hit !");
+        console.log("API body: ", body);
         const userId = await this.userService.login(body);
-        if (!userId) {
+        console.log("userId: ", userId.userId);
+        if (userId.userId == "") {
             return { message: "Invalid credentials!" };
         }
+        console.log("payload: ", userId);
         const token = this.jwtService.sign(userId);
+        console.log("token: ", token);
         res.cookie('user_token', token, {
+            httpOnly: true,
             expires: new Date(Date.now() + 3600000),
         });
         return { token };

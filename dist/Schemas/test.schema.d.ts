@@ -17,3 +17,16 @@ export declare const TestSchema: mongoose.Schema<Test, mongoose.Model<Test, any,
 }, any>, {}, {}, {}, {}, mongoose.DefaultSchemaOptions, Test, mongoose.Document<unknown, {}, mongoose.FlatRecord<Test>> & mongoose.FlatRecord<Test> & {
     _id: mongoose.Types.ObjectId;
 }>;
+export interface TestInterface extends mongoose.Document {
+    _id: string;
+    userid: string;
+    key: string;
+    title: string;
+    description: string;
+    prompt: string;
+    mcqs: number;
+    questions: number;
+    problems: number;
+    isPost: boolean;
+    time?: number;
+}

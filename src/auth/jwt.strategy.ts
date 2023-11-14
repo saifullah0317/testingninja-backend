@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Request as RequestType } from 'express';
@@ -30,6 +31,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
-    return { userId: payload.id };
+    return { userId: payload.userId };
   }
 }

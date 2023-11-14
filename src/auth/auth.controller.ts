@@ -13,14 +13,24 @@ export class AuthController {
   @Post('login')
   async login(@Body(new ValidationPipe()) body:LoginDto, @Res({ passthrough: true }) res) {
     // const payload = { username: 'john', id: 1 };
+    console.log("login API hit !")
+    console.log("API body: ",body);
     const userId=await this.userService.login(body);
-    if(!userId){
+    console.log("userId: ",userId.userId);
+    if(userId.userId==""){
       return {message:"Invalid credentials!"}
     }
+    console.log("payload: ",userId)
     const token= this.jwtService.sign(userId);
+    console.log("token: ",token);
     res.cookie('user_token',token, {
+      httpOnly: true,
+      // secure: false,
+      // sameSite: 'lax',
       expires: new Date(Date.now() + 3600000),
     });
+    
+    // console.log("date time: ",new Date(Date.now() + 3600000))
     return {token};
   }
 

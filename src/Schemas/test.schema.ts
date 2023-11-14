@@ -3,7 +3,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import { User } from './user.schema';
 
-@Schema()
+@Schema({timestamps:true})
 export class Test {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   userid: User;
@@ -25,11 +25,11 @@ export class Test {
 
   @Prop()
   questions:number;
-
+  
   @Prop()
   problems:number;
 
-  @Prop({required:false})
+  @Prop()
   isPost:boolean;
 
   @Prop({required:false})
@@ -37,3 +37,17 @@ export class Test {
 }
 
 export const TestSchema = SchemaFactory.createForClass(Test);
+
+export interface TestInterface extends mongoose.Document{
+  _id:string,
+  userid:string,
+  key:string,
+  title:string,
+  description:string,
+  prompt:string,
+  mcqs:number,
+  questions:number,
+  problems:number,
+  isPost:boolean,
+  time?:number
+}
