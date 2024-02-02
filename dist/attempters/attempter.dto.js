@@ -15,7 +15,7 @@ class AttempterDto {
 }
 exports.AttempterDto = AttempterDto;
 __decorate([
-    (0, class_validator_1.IsEmail)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], AttempterDto.prototype, "email", void 0);
 //# sourceMappingURL=attempter.dto.js.map

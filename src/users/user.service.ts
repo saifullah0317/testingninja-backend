@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Model } from 'mongoose';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from 'src/Schemas/user.schema';
 import { UserDto } from './user.dto';
@@ -11,20 +11,22 @@ export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserInterface>) {}
 
   async login(body):Promise<any>{
-    const loggedinUser=await this.getByEmail(body.email);
-    console.log("LoggedinUser: ",loggedinUser);
-    // if(!loggedinUser){
-    //   return {message:"Invalid email!"}
-    // }
-    // const {password,...payload}=loggedinUser;
-    if(body.password!=loggedinUser.password){
-      console.log("body.password: ",body.password);
-      console.log("loggedinUser.password: ",loggedinUser.password);
-      // return {message:"Invalid password!"}
-      return {userId:""};
+    try{
+      const loggedinUser=await this.getByEmail(body.email);
+      if(!loggedinUser){
+        throw new HttpException('Invalid credentials',HttpStatus.NOT_FOUND);
+      }
+      else{
+        if(body.password!=loggedinUser.password){
+          throw new HttpException('Invalid credentials',HttpStatus.UNAUTHORIZED);
+        }
+        else{
+          return {userId:loggedinUser._id.toString()};
+        }
+      }
     }
-    else{
-      return {userId:loggedinUser._id.toString()};
+    catch(e){
+      throw new HttpException(e,HttpStatus.BAD_REQUEST);
     }
   }
 

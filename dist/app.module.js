@@ -17,12 +17,15 @@ const question_module_1 = require("./questions/question.module");
 const attempter_module_1 = require("./attempters/attempter.module");
 const response_module_1 = require("./responses/response.module");
 const result_module_1 = require("./results/result.module");
+const attempterlist_module_1 = require("./attempterlists/attempterlist.module");
+const category_module_1 = require("./categories/category.module");
+const questionpool_module_1 = require("./questionpools/questionpool.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [user_module_1.UsersModule, test_module_1.TestModule, question_module_1.QuestionModule, attempter_module_1.AttempterModule, response_module_1.ResponseModule, result_module_1.ResultModule, auth_module_1.AuthModule, config_1.ConfigModule.forRoot({ isGlobal: true }), mongoose_1.MongooseModule.forRoot(process.env.MONGO_URI)],
+        imports: [user_module_1.UsersModule, test_module_1.TestModule, question_module_1.QuestionModule, attempter_module_1.AttempterModule, response_module_1.ResponseModule, result_module_1.ResultModule, auth_module_1.AuthModule, attempterlist_module_1.AttempterListModule, category_module_1.CategoryModule, questionpool_module_1.QuestionPoolModule, config_1.ConfigModule.forRoot({ isGlobal: true }), mongoose_1.MongooseModule.forRoot(process.env.MONGO_URI)],
         controllers: [],
         providers: [],
     })

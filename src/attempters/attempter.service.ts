@@ -1,6 +1,8 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable prefer-const */
+/* eslint-disable prettier/prettier */
 import { Model } from 'mongoose';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Attempter } from 'src/Schemas/attempter.schema';
 import { AttempterInterface } from 'src/Schemas/attempter.schema';
@@ -20,8 +22,22 @@ export class AttempterService {
   async getbyEmail(email:string):Promise<AttempterInterface>{
     return await this.attempterModel.findOne({email:email})
   }
-  async add(createattempterDto: AttempterDto): Promise<Attempter> {
+  async getbyIds(ids:string[]):Promise<string[]>{
+    try{
+      let index=0, emails=[];
+      while(index<ids.length){
+        let foundAttempter=await this.attempterModel.findById(ids[index]);
+        emails.push(foundAttempter.email);
+        index++;
+      }
+      return emails;
+    }
+    catch(e){
+      throw new HttpException(e,HttpStatus.BAD_REQUEST);
+    }
+  }
+  async add(createattempterDto: AttempterDto): Promise<AttempterInterface> {
     const createdAttempter = new this.attempterModel(createattempterDto);
-    return createdAttempter.save();
+    return await createdAttempter.save();
   }
 }

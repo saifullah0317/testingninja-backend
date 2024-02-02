@@ -6,7 +6,7 @@ export declare class AuthController {
     private jwtService;
     private userService;
     constructor(jwtService: JwtService, userService: UsersService);
-    login(body: LoginDto, res: any): Promise<{
+    login(body: LoginDto, res: any, req: any): Promise<{
         message: string;
         token?: undefined;
     } | {
@@ -16,7 +16,7 @@ export declare class AuthController {
     signup(body: UserDto, res: any): Promise<{
         token: string;
     }>;
-    logout(res: any): Promise<{
+    logout(res: any, req: any): Promise<{
         message: string;
     }>;
 }

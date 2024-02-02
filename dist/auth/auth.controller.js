@@ -23,34 +23,44 @@ let AuthController = class AuthController {
         this.jwtService = jwtService;
         this.userService = userService;
     }
-    async login(body, res) {
-        console.log("login API hit !");
-        console.log("API body: ", body);
-        const userId = await this.userService.login(body);
-        console.log("userId: ", userId.userId);
-        if (userId.userId == "") {
-            return { message: "Invalid credentials!" };
+    async login(body, res, req) {
+        try {
+            const userId = await this.userService.login(body);
+            if (userId.userId == "") {
+                return { message: "Invalid credentials" };
+            }
+            const token = this.jwtService.sign(userId);
+            res.cookie('user_token', token, {
+                httpOnly: true,
+                expires: new Date(Date.now() + 3600000),
+            });
+            return { token };
         }
-        console.log("payload: ", userId);
-        const token = this.jwtService.sign(userId);
-        console.log("token: ", token);
-        res.cookie('user_token', token, {
-            httpOnly: true,
-            expires: new Date(Date.now() + 3600000),
-        });
-        return { token };
+        catch (e) {
+            throw new common_1.HttpException(e, common_1.HttpStatus.NOT_FOUND);
+        }
     }
     async signup(body, res) {
-        const user = await this.userService.add(body);
-        const token = this.jwtService.sign({ userId: user._id });
-        res.cookie('user_token', token, {
-            expires: new Date(Date.now() + 3600000),
-        });
-        return { token };
+        try {
+            const user = await this.userService.add(body);
+            const token = this.jwtService.sign({ userId: user._id });
+            res.cookie('user_token', token, {
+                expires: new Date(Date.now() + 3600000),
+            });
+            return { token };
+        }
+        catch (e) {
+            throw new common_1.HttpException(e, common_1.HttpStatus.BAD_REQUEST);
+        }
     }
-    async logout(res) {
-        res.cookie('user_token', '', { expires: new Date(Date.now()) });
-        return { message: "loggedout!" };
+    async logout(res, req) {
+        try {
+            res.cookie('user_token', '', { expires: new Date(0) });
+            return { message: "loggedout!" };
+        }
+        catch (e) {
+            throw new common_1.HttpException(e, common_1.HttpStatus.BAD_REQUEST);
+        }
     }
 };
 exports.AuthController = AuthController;
@@ -58,8 +68,9 @@ __decorate([
     (0, common_1.Post)('login'),
     __param(0, (0, common_1.Body)(new common_1.ValidationPipe())),
     __param(1, (0, common_1.Res)({ passthrough: true })),
+    __param(2, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [login_dto_1.LoginDto, Object]),
+    __metadata("design:paramtypes", [login_dto_1.LoginDto, Object, Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "login", null);
 __decorate([
@@ -73,8 +84,9 @@ __decorate([
 __decorate([
     (0, common_1.Get)('logout'),
     __param(0, (0, common_1.Res)({ passthrough: true })),
+    __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "logout", null);
 exports.AuthController = AuthController = __decorate([

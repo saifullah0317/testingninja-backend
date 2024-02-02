@@ -11,6 +11,6 @@ export class Attempter {
 export const AttempterSchema = SchemaFactory.createForClass(Attempter);
 
 export interface AttempterInterface extends mongoose.Document{
-  _id:string,
+  _id: mongoose.Types.ObjectId,
   email:string,
 }

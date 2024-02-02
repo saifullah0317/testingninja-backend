@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { IsEmail, IsString } from "class-validator"
+import { IsString } from "class-validator"
 
 export class AttempterDto{
-    @IsEmail()
+    @IsString()
     email:string;
 }

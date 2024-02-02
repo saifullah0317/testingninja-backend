@@ -15,29 +15,17 @@ class TestDto {
 }
 exports.TestDto = TestDto;
 __decorate([
+    (0, class_validator_1.ArrayMinSize)(0),
+    __metadata("design:type", Array)
+], TestDto.prototype, "questionPoolid", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], TestDto.prototype, "key", void 0);
+__decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], TestDto.prototype, "title", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], TestDto.prototype, "description", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], TestDto.prototype, "prompt", void 0);
-__decorate([
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], TestDto.prototype, "mcqs", void 0);
-__decorate([
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], TestDto.prototype, "questions", void 0);
-__decorate([
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], TestDto.prototype, "problems", void 0);
 __decorate([
     (0, class_validator_1.IsBoolean)(),
     __metadata("design:type", Boolean)

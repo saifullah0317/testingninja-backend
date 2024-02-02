@@ -6,5 +6,6 @@ export declare class AttempterService {
     private attempterModel;
     constructor(attempterModel: Model<Attempter>);
     getbyEmail(email: string): Promise<AttempterInterface>;
-    add(createattempterDto: AttempterDto): Promise<Attempter>;
+    getbyIds(ids: string[]): Promise<string[]>;
+    add(createattempterDto: AttempterDto): Promise<AttempterInterface>;
 }

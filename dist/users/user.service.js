@@ -22,15 +22,22 @@ let UsersService = class UsersService {
         this.userModel = userModel;
     }
     async login(body) {
-        const loggedinUser = await this.getByEmail(body.email);
-        console.log("LoggedinUser: ", loggedinUser);
-        if (body.password != loggedinUser.password) {
-            console.log("body.password: ", body.password);
-            console.log("loggedinUser.password: ", loggedinUser.password);
-            return { userId: "" };
+        try {
+            const loggedinUser = await this.getByEmail(body.email);
+            if (!loggedinUser) {
+                throw new common_1.HttpException('Invalid credentials', common_1.HttpStatus.NOT_FOUND);
+            }
+            else {
+                if (body.password != loggedinUser.password) {
+                    throw new common_1.HttpException('Invalid credentials', common_1.HttpStatus.UNAUTHORIZED);
+                }
+                else {
+                    return { userId: loggedinUser._id.toString() };
+                }
+            }
         }
-        else {
-            return { userId: loggedinUser._id.toString() };
+        catch (e) {
+            throw new common_1.HttpException(e, common_1.HttpStatus.BAD_REQUEST);
         }
     }
     async getall() {

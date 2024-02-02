@@ -8,6 +8,6 @@ export declare const AttempterSchema: mongoose.Schema<Attempter, mongoose.Model<
     _id: mongoose.Types.ObjectId;
 }>;
 export interface AttempterInterface extends mongoose.Document {
-    _id: string;
+    _id: mongoose.Types.ObjectId;
     email: string;
 }

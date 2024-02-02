@@ -24,9 +24,23 @@ let AttempterService = class AttempterService {
     async getbyEmail(email) {
         return await this.attempterModel.findOne({ email: email });
     }
+    async getbyIds(ids) {
+        try {
+            let index = 0, emails = [];
+            while (index < ids.length) {
+                let foundAttempter = await this.attempterModel.findById(ids[index]);
+                emails.push(foundAttempter.email);
+                index++;
+            }
+            return emails;
+        }
+        catch (e) {
+            throw new common_1.HttpException(e, common_1.HttpStatus.BAD_REQUEST);
+        }
+    }
     async add(createattempterDto) {
         const createdAttempter = new this.attempterModel(createattempterDto);
-        return createdAttempter.save();
+        return await createdAttempter.save();
     }
 };
 exports.AttempterService = AttempterService;
