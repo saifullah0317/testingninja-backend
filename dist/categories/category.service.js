@@ -22,11 +22,21 @@ let CategoryService = class CategoryService {
         this.categoryModel = categoryModel;
     }
     async getbyuserid(userid) {
-        return await this.categoryModel.find({ userid }).exec();
+        try {
+            return await this.categoryModel.find({ userid }).exec();
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, common_1.HttpStatus.BAD_REQUEST);
+        }
     }
     async add(newCategory) {
-        const createdCategory = new this.categoryModel(newCategory);
-        return createdCategory.save();
+        try {
+            const createdCategory = new this.categoryModel(newCategory);
+            return createdCategory.save();
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, common_1.HttpStatus.BAD_REQUEST);
+        }
     }
 };
 exports.CategoryService = CategoryService;

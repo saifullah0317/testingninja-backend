@@ -1,13 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { IsString, IsEmail, IsBoolean } from "class-validator"
+import { IsString, IsEmail } from "class-validator"
 
 export class UserDto{
-    @IsBoolean()
-    userType:boolean;
-
-    @IsString()
-    orgName:string;
-
     @IsString()
     username:string;
 
@@ -16,4 +10,18 @@ export class UserDto{
 
     @IsString()
     password:string;
+}
+
+export class SignupDto{
+    @IsString()
+    username:string;
+
+    @IsEmail()
+    email:string;
+
+    @IsString()
+    password:string;
+
+    @IsString()
+    verificationCode:string;
 }

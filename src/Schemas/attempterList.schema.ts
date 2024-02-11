@@ -9,7 +9,7 @@ export class AttempterList {
     @Prop({type:mongoose.Schema.Types.ObjectId, ref:'User'})
     userid:User;
 
-    @Prop({unique:true})
+    @Prop()
     title:string;
 
     @Prop({required:false})

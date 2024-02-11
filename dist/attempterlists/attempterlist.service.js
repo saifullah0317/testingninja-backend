@@ -23,13 +23,35 @@ let AttempterListService = class AttempterListService {
         this.attempterListModel = attempterListModel;
         this.attempterService = attempterService;
     }
-    async checkAttempterListDuplication(userId, attemptersList) {
-        const foundAttemptersList = await this.attempterListModel.findOne({ $and: [{ userid: userId }, { attempters: attemptersList }] });
+    async checkAttempterListDuplication(userId, attemptersList, id) {
+        let foundAttemptersList;
+        if (id) {
+            console.log("id recieved: ", id);
+            foundAttemptersList = await this.attempterListModel.findOne({ $and: [{ userid: userId }, { attempters: attemptersList }, { _id: { $ne: id } }] });
+        }
+        else {
+            foundAttemptersList = await this.attempterListModel.findOne({ $and: [{ userid: userId }, { attempters: attemptersList }] });
+        }
         if (foundAttemptersList) {
             return foundAttemptersList.title;
         }
         else {
             return "";
+        }
+    }
+    async checkTitleDuplication(userId, title, id) {
+        let foundAttemptersList;
+        if (id) {
+            foundAttemptersList = await this.attempterListModel.findOne({ $and: [{ userid: userId }, { title }, { _id: { $ne: id } }] });
+        }
+        else {
+            foundAttemptersList = await this.attempterListModel.findOne({ $and: [{ userid: userId }, { title }] });
+        }
+        if (foundAttemptersList) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
     async getAttemptersByEmails(emails) {
@@ -64,16 +86,23 @@ let AttempterListService = class AttempterListService {
         try {
             const tempObj = JSON.parse(JSON.stringify(newList));
             tempObj.attempters = await this.getAttemptersByEmails(newList.attempters);
-            const foundAttemptersList = await this.checkAttempterListDuplication(tempObj.userid, tempObj.attempters);
-            if (foundAttemptersList) {
-                throw new common_1.HttpException(`Respondents list already found with the name: "${foundAttemptersList}"`, common_1.HttpStatus.BAD_REQUEST);
-            }
-            const updatedList = await this.attempterListModel.findByIdAndUpdate(listId, tempObj, { new: true });
-            if (updatedList) {
-                return updatedList;
+            console.log("body: ", tempObj);
+            const foundAttemptersListWithTitle = await this.checkTitleDuplication(tempObj.userid, tempObj.title, newList.id);
+            if (foundAttemptersListWithTitle) {
+                throw new common_1.HttpException(`Respondents list already found with the name: "${tempObj.title}"`, common_1.HttpStatus.BAD_REQUEST);
             }
             else {
-                throw new common_1.HttpException('List not found', common_1.HttpStatus.BAD_REQUEST);
+                const foundAttemptersList = await this.checkAttempterListDuplication(tempObj.userid, tempObj.attempters, newList.id);
+                if (foundAttemptersList) {
+                    throw new common_1.HttpException(`Respondents list already found with the name: "${foundAttemptersList}"`, common_1.HttpStatus.BAD_REQUEST);
+                }
+                const updatedList = await this.attempterListModel.findByIdAndUpdate(listId, tempObj, { new: true });
+                if (updatedList) {
+                    return updatedList;
+                }
+                else {
+                    throw new common_1.HttpException('List not found', common_1.HttpStatus.BAD_REQUEST);
+                }
             }
         }
         catch (error) {
@@ -83,16 +112,31 @@ let AttempterListService = class AttempterListService {
     async addlist(newlist) {
         try {
             const attemptersIds = await this.getAttemptersByEmails(newlist.attempters);
-            const foundAttemptersList = await this.checkAttempterListDuplication(newlist.userid, attemptersIds);
-            if (foundAttemptersList) {
-                console.log("error in service: ", foundAttemptersList);
-                throw new common_1.HttpException(`Respondents list already found with the name: "${foundAttemptersList}"`, common_1.HttpStatus.BAD_REQUEST);
+            const foundAttemptersListWithTitle = await this.checkTitleDuplication(newlist.userid, newlist.title, "");
+            if (foundAttemptersListWithTitle) {
+                throw new common_1.HttpException(`Respondents list already found with the name: "${newlist.title}"`, common_1.HttpStatus.BAD_REQUEST);
             }
             else {
-                newlist.attempters = attemptersIds;
-                const createdlist = new this.attempterListModel(newlist);
-                return createdlist.save();
+                const foundAttemptersList = await this.checkAttempterListDuplication(newlist.userid, attemptersIds, "");
+                if (foundAttemptersList) {
+                    console.log("error in service: ", foundAttemptersList);
+                    throw new common_1.HttpException(`Respondents list already found with the name: "${foundAttemptersList}"`, common_1.HttpStatus.BAD_REQUEST);
+                }
+                else {
+                    newlist.attempters = attemptersIds;
+                    const createdlist = new this.attempterListModel(newlist);
+                    return createdlist.save();
+                }
             }
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, common_1.HttpStatus.BAD_REQUEST);
+        }
+    }
+    async deletelist(id) {
+        try {
+            const deletedList = await this.attempterListModel.findByIdAndDelete(id);
+            return deletedList;
         }
         catch (error) {
             throw new common_1.HttpException(error, common_1.HttpStatus.BAD_REQUEST);

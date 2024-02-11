@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 import { Model, ObjectId } from 'mongoose';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { AttempterList } from 'src/Schemas/attempterList.schema';
 import { CategoryDto } from './category.dto';
@@ -14,11 +14,19 @@ export class CategoryService {
   constructor(@InjectModel(Category.name) private categoryModel: Model<AttempterList>) {}
 
   async getbyuserid(userid:string):Promise<any[]>{
-    return await this.categoryModel.find({userid}).exec();
+    try {
+      return await this.categoryModel.find({userid}).exec(); 
+    } catch (error) {
+      throw new HttpException(error,HttpStatus.BAD_REQUEST)
+    }
   }
 
   async add(newCategory:Category):Promise<any>{
-    const createdCategory=new this.categoryModel(newCategory);
-    return createdCategory.save();
+    try {
+      const createdCategory=new this.categoryModel(newCategory);
+      return createdCategory.save(); 
+    } catch (error) {
+      throw new HttpException(error,HttpStatus.BAD_REQUEST)
+    }
   }
 }

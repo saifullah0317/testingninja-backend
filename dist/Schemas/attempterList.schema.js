@@ -21,7 +21,7 @@ __decorate([
     __metadata("design:type", user_schema_1.User)
 ], AttempterList.prototype, "userid", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ unique: true }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
 ], AttempterList.prototype, "title", void 0);
 __decorate([

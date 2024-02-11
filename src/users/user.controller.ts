@@ -2,6 +2,7 @@
 import { Body, Controller, Get, Param, Post, Put, ValidationPipe } from '@nestjs/common';
 import { UsersService } from './user.service';
 import { UserDto } from './user.dto';
+import { SignupDto } from './user.dto';
 import { User } from 'src/Schemas/user.schema';
 @Controller('user')
 export class UserController {
@@ -21,7 +22,7 @@ export class UserController {
 
   // add a new user
   @Post()
-  add(@Body (new ValidationPipe()) body:UserDto):Promise<User>{
+  add(@Body (new ValidationPipe()) body:SignupDto):Promise<User>{
     return this.usersService.add(body);
   }
 

@@ -55,8 +55,17 @@ let AttempterListController = class AttempterListController {
             return createdList;
         }
         catch (e) {
-            console.log("error in controller: ", e.response);
+            console.log("error in controller: ", e);
             throw new common_1.HttpException(e, common_1.HttpStatus.BAD_REQUEST);
+        }
+    }
+    async deletelist(id) {
+        try {
+            const deletedList = await this.attempterListService.deletelist(id);
+            return deletedList;
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, common_1.HttpStatus.BAD_REQUEST);
         }
     }
 };
@@ -91,6 +100,15 @@ __decorate([
     __metadata("design:paramtypes", [Object, attempterlist_dto_1.AttempterListDto]),
     __metadata("design:returntype", Promise)
 ], AttempterListController.prototype, "addlist", null);
+__decorate([
+    (0, common_1.UseGuards)(guards_1.JwtGuard),
+    (0, common_1.UseGuards)(auth_guard_1.ExtractUser),
+    (0, common_1.Delete)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], AttempterListController.prototype, "deletelist", null);
 exports.AttempterListController = AttempterListController = __decorate([
     (0, common_1.Controller)('attempterlist'),
     __metadata("design:paramtypes", [attempter_service_1.AttempterService, attempterlist_service_1.AttempterListService, auth_service_1.AuthService])

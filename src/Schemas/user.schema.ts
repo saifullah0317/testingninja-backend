@@ -5,12 +5,6 @@ import * as mongoose from 'mongoose';
 @Schema()
 export class User {
   @Prop()
-  userType: boolean;
-
-  @Prop()
-  orgName: string;
-
-  @Prop()
   username: string;
 
   @Prop({unique:true})
@@ -18,15 +12,22 @@ export class User {
 
   @Prop()
   password: string;
+
+  @Prop()
+  active: boolean;  
+
+  @Prop({required:false})
+  verificationCode: string;
+
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
 
 export interface UserInterface extends mongoose.Document{
   _id:string,
-  userType:boolean,
-  orgName:string,
   username:string,
   email:string,
-  password:string
+  password:string,
+  active:boolean,
+  verificationCode:string
 }

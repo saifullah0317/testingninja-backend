@@ -25,14 +25,24 @@ let CategoryController = class CategoryController {
         this.authService = authService;
     }
     async getall(req) {
-        let userid = await this.authService.getUseridByToken(req.cookies);
-        console.log("user id while getting attempterslists: ", userid);
-        return await this.categoryService.getbyuserid(userid);
+        try {
+            let userid = await this.authService.getUseridByToken(req.cookies);
+            console.log("user id while getting attempterslists: ", userid);
+            return await this.categoryService.getbyuserid(userid);
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, common_1.HttpStatus.BAD_REQUEST);
+        }
     }
     async add(req, body) {
-        let tempObj = JSON.parse(JSON.stringify(body));
-        tempObj.userid = await this.authService.getUseridByToken(req.cookies);
-        return await this.categoryService.add(tempObj);
+        try {
+            let tempObj = JSON.parse(JSON.stringify(body));
+            tempObj.userid = await this.authService.getUseridByToken(req.cookies);
+            return await this.categoryService.add(tempObj);
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, common_1.HttpStatus.BAD_REQUEST);
+        }
     }
 };
 exports.CategoryController = CategoryController;

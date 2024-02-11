@@ -1,7 +1,11 @@
 export declare class UserDto {
-    userType: boolean;
-    orgName: string;
     username: string;
     email: string;
     password: string;
+}
+export declare class SignupDto {
+    username: string;
+    email: string;
+    password: string;
+    verificationCode: string;
 }

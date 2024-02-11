@@ -11,4 +11,5 @@ export declare class AttempterListController {
     getall(req: any): Promise<AttempterList[]>;
     updateList(id: string, req: any, body: AttempterListInterface): Promise<AttempterList>;
     addlist(req: any, body: AttempterListDto): Promise<AttempterList>;
+    deletelist(id: string): Promise<AttempterList>;
 }

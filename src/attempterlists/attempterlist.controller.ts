@@ -58,20 +58,6 @@ export class AttempterListController {
     }
   }
 
-  // @UseGuards(JwtGuard)
-  // @UseGuards(ExtractUser)
-  // @Put()
-  // async updateList(@Body (new ValidationPipe()) body:AttempterListInterface):Promise<AttempterList>{
-  //   const listId='65a50621e92cbf190ab5a5f0'
-  //   try{
-  //     const updatedList=await this.attempterListService.updateList(listId,body);
-  //     return updatedList;
-  //   }
-  //   catch(e){
-  //     throw new HttpException(e,HttpStatus.BAD_REQUEST);
-  //   }
-  // }
-
   // add new list
   @UseGuards(JwtGuard)
   @UseGuards(ExtractUser)
@@ -84,9 +70,22 @@ export class AttempterListController {
       return createdList;
     }
     catch(e){
-      console.log("error in controller: ",e.response);
+      console.log("error in controller: ",e);
       throw new HttpException(e,HttpStatus.BAD_REQUEST);
     }
   }
+
+  @UseGuards(JwtGuard)
+  @UseGuards(ExtractUser)
+  @Delete(':id')
+  async deletelist(@Param('id') id:string):Promise<AttempterList>{
+    try {
+      const deletedList=await this.attempterListService.deletelist(id);
+      return deletedList;
+    } catch (error) {
+      throw new HttpException(error,HttpStatus.BAD_REQUEST);
+    }
+  }
+
   
 }

@@ -1,6 +1,6 @@
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from 'src/users/login.dto';
-import { UserDto } from 'src/users/user.dto';
+import { SignupDto } from 'src/users/user.dto';
 import { UsersService } from 'src/users/user.service';
 export declare class AuthController {
     private jwtService;
@@ -13,8 +13,9 @@ export declare class AuthController {
         token: string;
         message?: undefined;
     }>;
-    signup(body: UserDto, res: any): Promise<{
+    signup(body: SignupDto, res: any): Promise<{
         token: string;
+        user: import("../Schemas/user.schema").UserInterface;
     }>;
     logout(res: any, req: any): Promise<{
         message: string;

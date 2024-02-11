@@ -2,7 +2,8 @@
 import { Controller, Get, Res, Post, Body, ValidationPipe, HttpException, HttpStatus, Req } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from 'src/users/login.dto';
-import { UserDto } from 'src/users/user.dto';
+import { SignupDto, UserDto } from 'src/users/user.dto';
+import { VerifyUserDto } from './verifyUser.dto';
 import { UsersService } from 'src/users/user.service';
 
 @Controller('auth')
@@ -19,7 +20,7 @@ export class AuthController {
       }
       const token= this.jwtService.sign(userId);
       res.cookie('user_token',token, {
-        httpOnly: true,
+        httpOnly: true, 
         // secure: false,
         // sameSite: 'lax',
         expires: new Date(Date.now() + 3600000),
@@ -32,14 +33,15 @@ export class AuthController {
   }
 
   @Post('signup')
-  async signup(@Body(new ValidationPipe()) body:UserDto, @Res({ passthrough: true }) res){
+  async signup(@Body(new ValidationPipe()) body:SignupDto, @Res({ passthrough: true }) res){
     try{
       const user=await this.userService.add(body);
       const token=this.jwtService.sign({userId:user._id});
       res.cookie('user_token', token, {
+        httpOnly: true,
         expires: new Date(Date.now() + 3600000),
       });
-      return {token};
+      return {token, user};
     }
     catch(e){
       throw new HttpException(e,HttpStatus.BAD_REQUEST)

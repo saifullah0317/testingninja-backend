@@ -17,9 +17,33 @@ const mongoose_1 = require("mongoose");
 const common_1 = require("@nestjs/common");
 const mongoose_2 = require("@nestjs/mongoose");
 const user_schema_1 = require("../Schemas/user.schema");
+const nodemailer = require("nodemailer");
 let UsersService = class UsersService {
     constructor(userModel) {
         this.userModel = userModel;
+    }
+    sendMail(to, subject, verificationCode, username) {
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: '2020cs102@student.uet.edu.pk',
+                pass: 'zpkp xabd cgss gvxd'
+            }
+        });
+        const mailOptions = {
+            from: '2020cs102@student.uet.edu.pk',
+            to,
+            subject,
+            html: `<p style="font-size: x-large;">Hi, ${username}</p><p style="font-size: large;">This is you email verification code: ${verificationCode}</p>`
+        };
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            }
+            else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
     }
     async login(body) {
         try {
@@ -44,8 +68,17 @@ let UsersService = class UsersService {
         return await this.userModel.find().exec();
     }
     async add(createUserDto) {
-        const createdUser = new this.userModel(createUserDto);
-        return createdUser.save();
+        try {
+            const tempObj = JSON.parse(JSON.stringify(createUserDto));
+            tempObj.active = false;
+            const createdUser = new this.userModel(tempObj);
+            await createdUser.save();
+            this.sendMail(createdUser.email, "Testingninja", tempObj.verificationCode, createdUser.username);
+            return createdUser;
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, common_1.HttpStatus.BAD_REQUEST);
+        }
     }
     async getByEmail(email) {
         const userData = await this.userModel.findOne({ email: email });
@@ -53,6 +86,14 @@ let UsersService = class UsersService {
             throw new common_1.NotFoundException('Invalid email !');
         }
         return userData;
+    }
+    async activateUser(id) {
+        try {
+            return await this.userModel.findByIdAndUpdate(id, { active: true }, { new: true });
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, common_1.HttpStatus.BAD_REQUEST);
+        }
     }
     async updateUser(id, body) {
         const updatedUser = await this.userModel.findByIdAndUpdate(id, body, { new: true });

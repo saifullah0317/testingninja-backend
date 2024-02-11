@@ -1,10 +1,10 @@
 import * as mongoose from 'mongoose';
 export declare class User {
-    userType: boolean;
-    orgName: string;
     username: string;
     email: string;
     password: string;
+    active: boolean;
+    verificationCode: string;
 }
 export declare const UserSchema: mongoose.Schema<User, mongoose.Model<User, any, any, any, mongoose.Document<unknown, any, User> & User & {
     _id: mongoose.Types.ObjectId;
@@ -13,9 +13,9 @@ export declare const UserSchema: mongoose.Schema<User, mongoose.Model<User, any,
 }>;
 export interface UserInterface extends mongoose.Document {
     _id: string;
-    userType: boolean;
-    orgName: string;
     username: string;
     email: string;
     password: string;
+    active: boolean;
+    verificationCode: string;
 }

@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable prefer-const */
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, Req, UseGuards, ValidationPipe } from '@nestjs/common';
 import { JwtGuard } from 'src/auth/guards';
 import { ExtractUser } from 'src/auth/auth.guard';
 import { AuthService } from 'src/auth/auth.service';
@@ -17,9 +17,13 @@ export class CategoryController {
   @UseGuards(ExtractUser)
   @Get()
   async getall(@Req() req):Promise<Category[]>{
-    let userid=await this.authService.getUseridByToken(req.cookies);
-    console.log("user id while getting attempterslists: ",userid);
-    return await this.categoryService.getbyuserid(userid);
+    try {
+      let userid=await this.authService.getUseridByToken(req.cookies);
+      console.log("user id while getting attempterslists: ",userid);
+      return await this.categoryService.getbyuserid(userid);
+    } catch (error) {
+      throw new HttpException(error,HttpStatus.BAD_REQUEST)
+    }
   }
 
   // add new list
@@ -27,9 +31,13 @@ export class CategoryController {
   @UseGuards(ExtractUser)
   @Post()
   async add(@Req() req,@Body (new ValidationPipe()) body:CategoryDto):Promise<Category>{
-    let tempObj=JSON.parse(JSON.stringify(body));
-    tempObj.userid=await this.authService.getUseridByToken(req.cookies);
-    return await this.categoryService.add(tempObj);
+    try {
+      let tempObj=JSON.parse(JSON.stringify(body));
+      tempObj.userid=await this.authService.getUseridByToken(req.cookies);
+      return await this.categoryService.add(tempObj); 
+    } catch (error) {
+      throw new HttpException(error,HttpStatus.BAD_REQUEST)
+    }
   }
   
 }

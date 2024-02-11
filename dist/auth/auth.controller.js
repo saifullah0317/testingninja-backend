@@ -45,9 +45,10 @@ let AuthController = class AuthController {
             const user = await this.userService.add(body);
             const token = this.jwtService.sign({ userId: user._id });
             res.cookie('user_token', token, {
+                httpOnly: true,
                 expires: new Date(Date.now() + 3600000),
             });
-            return { token };
+            return { token, user };
         }
         catch (e) {
             throw new common_1.HttpException(e, common_1.HttpStatus.BAD_REQUEST);
@@ -78,7 +79,7 @@ __decorate([
     __param(0, (0, common_1.Body)(new common_1.ValidationPipe())),
     __param(1, (0, common_1.Res)({ passthrough: true })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [user_dto_1.UserDto, Object]),
+    __metadata("design:paramtypes", [user_dto_1.SignupDto, Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "signup", null);
 __decorate([
