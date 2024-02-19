@@ -9,7 +9,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CategoryModule = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
-const user_module_1 = require("../users/user.module");
 const auth_module_1 = require("../auth/auth.module");
 const jwt_1 = require("@nestjs/jwt");
 const category_schema_1 = require("../Schemas/category.schema");
@@ -20,7 +19,7 @@ let CategoryModule = class CategoryModule {
 exports.CategoryModule = CategoryModule;
 exports.CategoryModule = CategoryModule = __decorate([
     (0, common_1.Module)({
-        imports: [user_module_1.UsersModule, auth_module_1.AuthModule, mongoose_1.MongooseModule.forFeature([{ name: category_schema_1.Category.name, schema: category_schema_1.CategorySchema }])],
+        imports: [auth_module_1.AuthModule, mongoose_1.MongooseModule.forFeature([{ name: category_schema_1.Category.name, schema: category_schema_1.CategorySchema }])],
         controllers: [category_controller_1.CategoryController],
         providers: [category_service_1.CategoryService, jwt_1.JwtService],
     })

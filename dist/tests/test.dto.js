@@ -15,10 +15,6 @@ class TestDto {
 }
 exports.TestDto = TestDto;
 __decorate([
-    (0, class_validator_1.ArrayMinSize)(0),
-    __metadata("design:type", Array)
-], TestDto.prototype, "questionPoolid", void 0);
-__decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], TestDto.prototype, "key", void 0);

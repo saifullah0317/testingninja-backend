@@ -4,6 +4,7 @@ import { UsersService } from './user.service';
 import { UserDto } from './user.dto';
 import { SignupDto } from './user.dto';
 import { User } from 'src/Schemas/user.schema';
+import { CategoryService } from 'src/categories/category.service';
 @Controller('user')
 export class UserController {
   constructor(private readonly usersService: UsersService) {}

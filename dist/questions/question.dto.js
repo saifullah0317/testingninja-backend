@@ -22,15 +22,7 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], QuestionDto.prototype, "type", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
 ], QuestionDto.prototype, "question", void 0);
-__decorate([
-    (0, class_validator_1.ArrayMinSize)(0),
-    __metadata("design:type", Array)
-], QuestionDto.prototype, "suggestedAnswer", void 0);
 class OtionalQuestionDto extends (0, swagger_1.PartialType)(QuestionDto) {
 }
 exports.OtionalQuestionDto = OtionalQuestionDto;

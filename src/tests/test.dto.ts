@@ -4,9 +4,6 @@ import { IsString, IsNumber, IsBoolean, IsDate, ArrayMinSize } from "class-valid
 export class TestDto{
     categoryid?:string; 
 
-    @ArrayMinSize(0)
-    questionPoolid:string[];
-
     @IsString()
     key:string;
 
@@ -20,15 +17,13 @@ export class TestDto{
 
     allowAll?:boolean;
 
-    attempts?:number;
-
     attempterListid?:string[];
 
     time?:number;
 
-    expireat?:Date;
+    expireat?:string;
 
-    activeOn?:Date;
+    activeOn?:string;
 
     instructions?:string[];
 }

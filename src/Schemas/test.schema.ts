@@ -3,7 +3,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import { User } from './user.schema';
 import { Category } from './category.schema';
-import { QuestionPool } from './questionPool.schema';
 import { AttempterList } from './attempterList.schema';
 
 @Schema({timestamps:true})
@@ -11,11 +10,11 @@ export class Test {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   userid: User;
 
-  @Prop({ required:false, type: mongoose.Schema.Types.ObjectId, ref: 'Category' })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Category' })
   categoryid: Category;
 
-  @Prop()
-  questionPoolid: string[];
+  @Prop({ required:false, type: mongoose.Schema.Types.ObjectId, ref: 'AttempterList' })
+  attempterListid: AttempterList[];
 
   @Prop({unique:true})
   key:string;
@@ -33,19 +32,13 @@ export class Test {
   allowAll:boolean;
 
   @Prop({required:false})
-  attempts:number;
-
-  @Prop({ required:false})
-  attempterListid: string[];
-
-  @Prop({required:false})
   time:number;
 
   @Prop({required:false})
-  expireAt:Date;
+  expireAt:string;
 
   @Prop({required:false})
-  activeOn:Date;
+  activeOn:string;
 
   @Prop({required:false})
   instructions:string[];
@@ -56,15 +49,13 @@ export const TestSchema = SchemaFactory.createForClass(Test);
 export interface TestInterface extends mongoose.Document{
   _id:string,
   userid:string,
-  categoryid?:string,
-  questionPoolid:string[],
+  categoryid:string,
+  attempterListid?:string[],
   key:string,
   title:string,
   description?:string,
   isPost:boolean,
   allowAll?:boolean,
-  attempts?:number,
-  attempterListid?:string[],
   time?:number,
   exireAt?:string,
   activeOn?:string,
