@@ -24,15 +24,34 @@
 /// <reference types="mongoose/types/inferschematype" />
 import { Model } from 'mongoose';
 import { Test } from 'src/Schemas/test.schema';
+import { TestDto } from './test.dto';
 import { TestInterface } from 'src/Schemas/test.schema';
+import { AttempterService } from 'src/attempters/attempter.service';
+import { AttempterListService } from 'src/attempterlists/attempterlist.service';
 export declare class TestService {
     private testModel;
-    constructor(testModel: Model<Test>);
+    private readonly attempterListService;
+    private readonly attempterService;
+    constructor(testModel: Model<Test>, attempterListService: AttempterListService, attempterService: AttempterService);
     getall(): Promise<Test[]>;
     getByKey(testkey: string): Promise<import("mongoose").Document<unknown, {}, Test> & Test & {
         _id: import("mongoose").Types.ObjectId;
     }>;
     generateString(length: any): Promise<string>;
     add(createTestDto: TestInterface): Promise<Test>;
+    updateTest(id: string, updateTestDto: TestDto): Promise<Test>;
+    deleteTest(id: string): Promise<import("mongoose").Document<unknown, {}, Test> & Test & {
+        _id: import("mongoose").Types.ObjectId;
+    }>;
     getByUserid(userid: string): Promise<any>;
+    sendTestKey(testid: string): Promise<string[]>;
+    initiateResponse(email: string, key: string): Promise<{
+        message: string;
+        testId?: undefined;
+        attempterId?: undefined;
+    } | {
+        testId: string;
+        attempterId: any;
+        message?: undefined;
+    }>;
 }

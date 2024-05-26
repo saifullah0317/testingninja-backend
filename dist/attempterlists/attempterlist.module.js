@@ -24,6 +24,7 @@ exports.AttempterListModule = AttempterListModule = __decorate([
         imports: [user_module_1.UsersModule, auth_module_1.AuthModule, attempter_module_1.AttempterModule, mongoose_1.MongooseModule.forFeature([{ name: attempterList_schema_1.AttempterList.name, schema: attempterList_schema_1.AttempterListSchema }])],
         controllers: [attempterlist_controller_1.AttempterListController],
         providers: [attempterlist_service_1.AttempterListService, jwt_1.JwtService],
+        exports: [attempterlist_service_1.AttempterListService]
     })
 ], AttempterListModule);
 //# sourceMappingURL=attempterlist.module.js.map

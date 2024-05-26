@@ -2,9 +2,11 @@ import * as mongoose from 'mongoose';
 import { User } from './user.schema';
 import { Category } from './category.schema';
 import { AttempterList } from './attempterList.schema';
+import { Question } from './question.schema';
 export declare class Test {
     userid: User;
     categoryid: Category;
+    questions: Question[];
     attempterListid: AttempterList[];
     key: string;
     title: string;
@@ -12,8 +14,7 @@ export declare class Test {
     isPost: boolean;
     allowAll: boolean;
     time: number;
-    expireAt: string;
-    activeOn: string;
+    active: boolean;
     instructions: string[];
 }
 export declare const TestSchema: mongoose.Schema<Test, mongoose.Model<Test, any, any, any, mongoose.Document<unknown, any, Test> & Test & {
@@ -25,6 +26,7 @@ export interface TestInterface extends mongoose.Document {
     _id: string;
     userid: string;
     categoryid: string;
+    questions: string[];
     attempterListid?: string[];
     key: string;
     title: string;
@@ -32,7 +34,6 @@ export interface TestInterface extends mongoose.Document {
     isPost: boolean;
     allowAll?: boolean;
     time?: number;
-    exireAt?: string;
-    activeOn?: string;
+    active: boolean;
     instructions?: string[];
 }

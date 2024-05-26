@@ -83,7 +83,7 @@ let UsersService = class UsersService {
     async getByEmail(email) {
         const userData = await this.userModel.findOne({ email: email });
         if (!userData) {
-            throw new common_1.NotFoundException('Invalid email !');
+            throw new common_1.NotFoundException('Email not found !');
         }
         return userData;
     }

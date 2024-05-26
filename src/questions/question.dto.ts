@@ -4,13 +4,16 @@ import { PartialType } from "@nestjs/swagger";
 
 export class QuestionDto{
     @IsString()
-    testid:string;
-
-    @IsString()
     question:string;
+
+    startRange?:number;
+
+    endRange?:number;
+
+    allowMultChoice?:boolean;
 
     options?:string[];
 
     mcqOption?:string;
 }
-export class OtionalQuestionDto extends PartialType(QuestionDto) {}
+// export class OtionalQuestionDto extends PartialType(QuestionDto) {}

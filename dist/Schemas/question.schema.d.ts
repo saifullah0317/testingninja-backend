@@ -1,8 +1,9 @@
 import * as mongoose from 'mongoose';
-import { Test } from './test.schema';
 export declare class Question {
-    testid: Test;
     question: string;
+    startRange: number;
+    endRange: number;
+    allowMultChoice: boolean;
     options: string[];
     mcqOption: string;
 }
@@ -13,8 +14,10 @@ export declare const QuestionSchema: mongoose.Schema<Question, mongoose.Model<Qu
 }>;
 export interface QuestionInterface extends mongoose.Document {
     _id: string;
-    testid: string;
     question: string;
+    startRange?: number;
+    allowMultChoice?: boolean;
+    endRange?: number;
     options?: string[];
     mcqOption?: string;
 }

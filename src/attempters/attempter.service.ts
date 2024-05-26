@@ -20,7 +20,11 @@ export class AttempterService {
   //   return await this.attempterModel.find().exec();
   // }
   async getbyEmail(email:string):Promise<AttempterInterface>{
-    return await this.attempterModel.findOne({email:email})
+    try {
+      return await this.attempterModel.findOne({email:email})
+    } catch (error) {
+      throw new HttpException(error,HttpStatus.BAD_REQUEST);
+    }
   }
   async getbyIds(ids:string[]):Promise<string[]>{
     try{
@@ -37,7 +41,11 @@ export class AttempterService {
     }
   }
   async add(createattempterDto: AttempterDto): Promise<AttempterInterface> {
-    const createdAttempter = new this.attempterModel(createattempterDto);
-    return await createdAttempter.save();
+    try {
+      const createdAttempter = new this.attempterModel(createattempterDto);
+      return await createdAttempter.save();
+    } catch (error) {
+      throw new HttpException(error,HttpStatus.BAD_REQUEST);
+    }
   }
 }

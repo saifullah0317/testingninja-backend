@@ -17,7 +17,7 @@ exports.TestDto = TestDto;
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], TestDto.prototype, "key", void 0);
+], TestDto.prototype, "categoryid", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)

@@ -42,30 +42,14 @@ let ResponseService = class ResponseService {
             }).populate('attempterid');
         }
     }
-    async checkByAttempter(attempterKeyDto) {
-        const attempterFound = await this.attempterService.getbyEmail(attempterKeyDto.email);
-        if (!attempterFound) {
-            throw new common_1.NotFoundException();
-        }
-        const testFound = await this.testService.getByKey(attempterKeyDto.key);
-        if (!testFound) {
-            throw new common_1.NotFoundException();
-        }
-        const questionsFound = await this.questionService.getByTestid(testFound._id);
-        if (questionsFound.length == 0) {
-            throw new common_1.NotFoundException();
-        }
-        const responseFound = await this.responseModel.find({ attempterid: attempterFound._id, questionid: questionsFound[0]._id });
-        if (responseFound.length > 0) {
-            return { attempterid: "" };
-        }
-        else {
-            return { attempterid: attempterFound._id.toString() };
-        }
-    }
     async add(createquestionDto) {
-        const createdTest = new this.responseModel(createquestionDto);
-        return createdTest.save();
+        try {
+            const createdTest = new this.responseModel(createquestionDto);
+            return createdTest.save();
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, common_1.HttpStatus.BAD_REQUEST);
+        }
     }
 };
 exports.ResponseService = ResponseService;

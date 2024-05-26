@@ -75,7 +75,7 @@ export class UsersService {
   async getByEmail(email:string): Promise<UserInterface> {
     const userData=await this.userModel.findOne({email:email});
     if(!userData){
-        throw new NotFoundException('Invalid email !');
+        throw new NotFoundException('Email not found !');
     }
     return userData;
   }

@@ -21,7 +21,7 @@ exports.CategoryModule = CategoryModule = __decorate([
     (0, common_1.Module)({
         imports: [auth_module_1.AuthModule, mongoose_1.MongooseModule.forFeature([{ name: category_schema_1.Category.name, schema: category_schema_1.CategorySchema }])],
         controllers: [category_controller_1.CategoryController],
-        providers: [category_service_1.CategoryService, jwt_1.JwtService],
+        providers: [category_service_1.CategoryService, jwt_1.JwtService]
     })
 ], CategoryModule);
 //# sourceMappingURL=category.module.js.map

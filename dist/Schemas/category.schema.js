@@ -21,7 +21,7 @@ __decorate([
     __metadata("design:type", user_schema_1.User)
 ], Category.prototype, "userid", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ unique: true }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
 ], Category.prototype, "category", void 0);
 exports.Category = Category = __decorate([

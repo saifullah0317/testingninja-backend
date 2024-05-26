@@ -5,15 +5,23 @@ import { Attempter } from './attempter.schema';
 import { Question } from './question.schema';
 
 @Schema()
-export class Response {
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Attempter' })
-    attempterid: Attempter;
-
+export class SingleResponse {
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Question' })
     questionid: Question;
 
     @Prop()
     response: string;
+}
+
+export const SingleResponseSchema = SchemaFactory.createForClass(SingleResponse);
+
+@Schema()
+export class Response {
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Attempter' })
+    attempterid: Attempter;
+
+    @Prop({ type: [SingleResponseSchema] })
+    responses: SingleResponse[];
 }
 
 export const ResponseSchema = SchemaFactory.createForClass(Response);

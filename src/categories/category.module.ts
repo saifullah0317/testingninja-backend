@@ -10,7 +10,6 @@ import { CategoryController } from './category.controller';
 @Module({
   imports: [AuthModule, MongooseModule.forFeature([{ name: Category.name, schema: CategorySchema }])],
   controllers: [CategoryController],
-  providers: [CategoryService,JwtService],
-//   exports:[QuestionService]
+  providers: [CategoryService,JwtService]
 })
 export class CategoryModule {}

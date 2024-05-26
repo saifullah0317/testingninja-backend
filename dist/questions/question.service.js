@@ -17,39 +17,36 @@ const mongoose_1 = require("mongoose");
 const common_1 = require("@nestjs/common");
 const mongoose_2 = require("@nestjs/mongoose");
 const question_schema_1 = require("../Schemas/question.schema");
-const test_service_1 = require("../tests/test.service");
 let QuestionService = class QuestionService {
-    constructor(questionModel, testService) {
+    constructor(questionModel) {
         this.questionModel = questionModel;
-        this.testService = testService;
     }
     async getall() {
-        return await this.questionModel.find().populate({
-            path: 'testid',
-            populate: {
-                path: 'userid',
-                model: 'User'
-            }
-        }).exec();
-    }
-    async getByKey(key) {
-        const test = await this.testService.getByKey(key);
-        if (test) {
-            let test_id = test._id;
-            const questions = await this.getByTestid(test_id);
-            return questions;
-        }
-        else {
-            return [];
-        }
+        return await this.questionModel.find().exec();
     }
     async add(createquestionDto) {
         const createdTest = new this.questionModel(createquestionDto);
-        return (await createdTest.save()).populate('testid');
+        return await createdTest.save();
     }
-    async getByTestid(test_id) {
-        const testData = await this.questionModel.find({ testid: test_id });
-        return testData;
+    async addAll(createAllQuestionsDto) {
+        try {
+            const createdQuestions = [];
+            for (let i = 0; i < createAllQuestionsDto.questions.length; i++) {
+                const foundQuestion = await this.questionModel.findOne({ question: createAllQuestionsDto.questions[i].question });
+                if (!foundQuestion) {
+                    const createdQuestion = new this.questionModel(createAllQuestionsDto.questions[i]);
+                    await createdQuestion.save();
+                    createdQuestions.push(createdQuestion);
+                }
+                else {
+                    createdQuestions.push(foundQuestion);
+                }
+            }
+            return createdQuestions;
+        }
+        catch (e) {
+            throw new common_1.HttpException(e.message, common_1.HttpStatus.BAD_REQUEST);
+        }
     }
     async update(id, body) {
         return await this.questionModel.findByIdAndUpdate(id, body, { new: true });
@@ -62,7 +59,6 @@ exports.QuestionService = QuestionService;
 exports.QuestionService = QuestionService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_2.InjectModel)(question_schema_1.Question.name)),
-    __metadata("design:paramtypes", [mongoose_1.Model,
-        test_service_1.TestService])
+    __metadata("design:paramtypes", [mongoose_1.Model])
 ], QuestionService);
 //# sourceMappingURL=question.service.js.map

@@ -12,15 +12,16 @@ const mongoose_1 = require("@nestjs/mongoose");
 const question_schema_1 = require("../Schemas/question.schema");
 const question_controller_1 = require("./question.controller");
 const question_service_1 = require("./question.service");
-const test_module_1 = require("../tests/test.module");
+const auth_module_1 = require("../auth/auth.module");
+const jwt_1 = require("@nestjs/jwt");
 let QuestionModule = class QuestionModule {
 };
 exports.QuestionModule = QuestionModule;
 exports.QuestionModule = QuestionModule = __decorate([
     (0, common_1.Module)({
-        imports: [test_module_1.TestModule, mongoose_1.MongooseModule.forFeature([{ name: question_schema_1.Question.name, schema: question_schema_1.QuestionSchema }])],
+        imports: [auth_module_1.AuthModule, mongoose_1.MongooseModule.forFeature([{ name: question_schema_1.Question.name, schema: question_schema_1.QuestionSchema }])],
         controllers: [question_controller_1.QuestionController],
-        providers: [question_service_1.QuestionService],
+        providers: [question_service_1.QuestionService, jwt_1.JwtService],
         exports: [question_service_1.QuestionService]
     })
 ], QuestionModule);

@@ -8,7 +8,7 @@ export class Category {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   userid: User;
 
-  @Prop({unique:true})
+  @Prop()
   category:string;
 }
 

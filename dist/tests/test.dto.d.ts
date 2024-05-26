@@ -1,13 +1,12 @@
 export declare class TestDto {
-    categoryid?: string;
-    key: string;
+    categoryid: string;
+    questions: string[];
     title: string;
     description?: string;
     isPost: boolean;
     allowAll?: boolean;
     attempterListid?: string[];
     time?: number;
-    expireat?: string;
-    activeOn?: string;
+    active: boolean;
     instructions?: string[];
 }

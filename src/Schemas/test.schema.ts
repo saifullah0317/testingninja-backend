@@ -4,6 +4,7 @@ import * as mongoose from 'mongoose';
 import { User } from './user.schema';
 import { Category } from './category.schema';
 import { AttempterList } from './attempterList.schema';
+import { Question } from './question.schema';
 
 @Schema({timestamps:true})
 export class Test {
@@ -13,7 +14,10 @@ export class Test {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Category' })
   categoryid: Category;
 
-  @Prop({ required:false, type: mongoose.Schema.Types.ObjectId, ref: 'AttempterList' })
+  @Prop({type:[{type: mongoose.Schema.Types.ObjectId, ref: 'Question'}]})
+  questions: Question[];
+
+  @Prop({type:[{ required:false, type: mongoose.Schema.Types.ObjectId, ref: 'AttempterList' }]})
   attempterListid: AttempterList[];
 
   @Prop({unique:true})
@@ -34,11 +38,14 @@ export class Test {
   @Prop({required:false})
   time:number;
 
-  @Prop({required:false})
-  expireAt:string;
+  @Prop()
+  active:boolean;
 
-  @Prop({required:false})
-  activeOn:string;
+  // @Prop({required:false})
+  // expireAt:string;
+
+  // @Prop({required:false})
+  // activeOn:string;
 
   @Prop({required:false})
   instructions:string[];
@@ -50,6 +57,7 @@ export interface TestInterface extends mongoose.Document{
   _id:string,
   userid:string,
   categoryid:string,
+  questions:string[],
   attempterListid?:string[],
   key:string,
   title:string,
@@ -57,7 +65,8 @@ export interface TestInterface extends mongoose.Document{
   isPost:boolean,
   allowAll?:boolean,
   time?:number,
-  exireAt?:string,
-  activeOn?:string,
+  active:boolean,
+  // exireAt?:string,
+  // activeOn?:string,
   instructions?:string[]
 }

@@ -26,7 +26,11 @@ __decorate([
     __metadata("design:type", category_schema_1.Category)
 ], Test.prototype, "categoryid", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: false, type: mongoose.Schema.Types.ObjectId, ref: 'AttempterList' }),
+    (0, mongoose_1.Prop)({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }] }),
+    __metadata("design:type", Array)
+], Test.prototype, "questions", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: [{ required: false, type: mongoose.Schema.Types.ObjectId, ref: 'AttempterList' }] }),
     __metadata("design:type", Array)
 ], Test.prototype, "attempterListid", void 0);
 __decorate([
@@ -54,13 +58,9 @@ __decorate([
     __metadata("design:type", Number)
 ], Test.prototype, "time", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: false }),
-    __metadata("design:type", String)
-], Test.prototype, "expireAt", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ required: false }),
-    __metadata("design:type", String)
-], Test.prototype, "activeOn", void 0);
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", Boolean)
+], Test.prototype, "active", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ required: false }),
     __metadata("design:type", Array)

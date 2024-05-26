@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, Param, Post, Put, ValidationPipe, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, ValidationPipe, Query, HttpException, HttpStatus } from '@nestjs/common';
 import { ResponseService } from './response.service';
 import { Response } from 'src/Schemas/response.schema';
 import { ResponseDto } from './response.dto';
@@ -18,11 +18,15 @@ export class ResponseController {
   // add a new test
   @Post()
   async add(@Body (new ValidationPipe()) body:ResponseDto):Promise<Response>{
-    return await this.responseService.add(body);
+    try {
+      return await this.responseService.add(body);
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.BAD_REQUEST);
+    }
   }
 
-  @Post('authorization')
-  async checkValidity(@Body (new ValidationPipe()) body:AttempterKeyDto):Promise<{attempterid:string}>{
-    return await this.responseService.checkByAttempter(body);
-  }
+  // @Post('authorization')
+  // async checkValidity(@Body (new ValidationPipe()) body:AttempterKeyDto):Promise<{attempterid:string}>{
+  //   return await this.responseService.checkByAttempter(body);
+  // }
 }

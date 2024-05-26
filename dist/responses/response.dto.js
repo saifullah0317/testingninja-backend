@@ -19,11 +19,7 @@ __decorate([
     __metadata("design:type", String)
 ], ResponseDto.prototype, "attempterid", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], ResponseDto.prototype, "questionid", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], ResponseDto.prototype, "response", void 0);
+    (0, class_validator_1.IsArray)(),
+    __metadata("design:type", Array)
+], ResponseDto.prototype, "responses", void 0);
 //# sourceMappingURL=response.dto.js.map

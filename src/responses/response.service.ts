@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Model } from 'mongoose';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Response } from 'src/Schemas/response.schema';
 import { ResponseDto } from './response.dto';
@@ -33,35 +33,39 @@ export class ResponseService {
     }
   }
 
-  async checkByAttempter(attempterKeyDto:AttempterKeyDto):Promise<{attempterid:string}>{
-    const attempterFound=await this.attempterService.getbyEmail(attempterKeyDto.email);
-    if(!attempterFound){
-      throw new NotFoundException()
-    }
-    // console.log("attempterFound: ",attempterFound);
-    const testFound=await this.testService.getByKey(attempterKeyDto.key);
-    if(!testFound){
-      throw new NotFoundException()
-    }
-    // console.log("testFound: ",testFound);
-    const questionsFound=await this.questionService.getByTestid(testFound._id);
-    if(questionsFound.length==0){
-      throw new NotFoundException()
-    }
-    // console.log("questionsFound: ",questionsFound);
-    const responseFound=await this.responseModel.find({attempterid:attempterFound._id, questionid:questionsFound[0]._id});
-    // console.log("responseFound: ",responseFound);
-    if(responseFound.length>0){
-      return {attempterid:""};
-    }
-    else{
-      return {attempterid:attempterFound._id.toString()};
-    }
-  }
+  // async checkByAttempter(attempterKeyDto:AttempterKeyDto):Promise<{attempterid:string}>{
+  //   const attempterFound=await this.attempterService.getbyEmail(attempterKeyDto.email);
+  //   if(!attempterFound){
+  //     throw new NotFoundException()
+  //   }
+  //   // console.log("attempterFound: ",attempterFound);
+  //   const testFound=await this.testService.getByKey(attempterKeyDto.key);
+  //   if(!testFound){
+  //     throw new NotFoundException()
+  //   }
+  //   // console.log("testFound: ",testFound);
+  //   const questionsFound=await this.questionService.getByTestid(testFound._id);
+  //   if(questionsFound.length==0){
+  //     throw new NotFoundException()
+  //   }
+  //   // console.log("questionsFound: ",questionsFound);
+  //   const responseFound=await this.responseModel.find({attempterid:attempterFound._id, questionid:questionsFound[0]._id});
+  //   // console.log("responseFound: ",responseFound);
+  //   if(responseFound.length>0){
+  //     return {attempterid:""};
+  //   }
+  //   else{
+  //     return {attempterid:attempterFound._id.toString()};
+  //   }
+  // }
 
   async add(createquestionDto: ResponseDto): Promise<Response> {
-    const createdTest = new this.responseModel(createquestionDto);
-    return createdTest.save();
+    try {
+      const createdTest = new this.responseModel(createquestionDto);
+      return createdTest.save();
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.BAD_REQUEST);
+    }
   }
 
 }

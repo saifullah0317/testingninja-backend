@@ -2,10 +2,10 @@
 import { IsString, IsNumber, IsBoolean, IsDate, ArrayMinSize } from "class-validator"
 
 export class TestDto{
-    categoryid?:string; 
-
     @IsString()
-    key:string;
+    categoryid:string; 
+
+    questions:string[];
 
     @IsString()
     title:string;
@@ -21,9 +21,11 @@ export class TestDto{
 
     time?:number;
 
-    expireat?:string;
+    active:boolean;
 
-    activeOn?:string;
+    // expireat?:string;
+
+    // activeOn?:string;
 
     instructions?:string[];
 }

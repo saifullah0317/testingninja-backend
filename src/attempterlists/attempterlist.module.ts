@@ -13,6 +13,6 @@ import { JwtService } from '@nestjs/jwt';
   imports: [UsersModule, AuthModule,  AttempterModule, MongooseModule.forFeature([{ name: AttempterList.name, schema: AttempterListSchema }])],
   controllers: [AttempterListController],
   providers: [AttempterListService,JwtService],
-  // exports:[AttempterListService]
+  exports:[AttempterListService]
 })
 export class AttempterListModule {}

@@ -4,12 +4,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Question, QuestionSchema } from 'src/Schemas/question.schema';
 import { QuestionController } from './question.controller';
 import { QuestionService } from './question.service';
-import { TestModule } from 'src/tests/test.module';
+import { AuthModule } from 'src/auth/auth.module';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
-  imports: [TestModule, MongooseModule.forFeature([{ name: Question.name, schema: QuestionSchema }])],
+  imports: [AuthModule,MongooseModule.forFeature([{ name: Question.name, schema: QuestionSchema }])],
   controllers: [QuestionController],
-  providers: [QuestionService],
+  providers: [QuestionService, JwtService],
   exports:[QuestionService]
 })
 export class QuestionModule {}

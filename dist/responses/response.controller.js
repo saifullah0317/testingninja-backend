@@ -16,7 +16,6 @@ exports.ResponseController = void 0;
 const common_1 = require("@nestjs/common");
 const response_service_1 = require("./response.service");
 const response_dto_1 = require("./response.dto");
-const attempterKey_dto_1 = require("./attempterKey.dto");
 let ResponseController = class ResponseController {
     constructor(responseService) {
         this.responseService = responseService;
@@ -25,10 +24,12 @@ let ResponseController = class ResponseController {
         return await this.responseService.get(query);
     }
     async add(body) {
-        return await this.responseService.add(body);
-    }
-    async checkValidity(body) {
-        return await this.responseService.checkByAttempter(body);
+        try {
+            return await this.responseService.add(body);
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, common_1.HttpStatus.BAD_REQUEST);
+        }
     }
 };
 exports.ResponseController = ResponseController;
@@ -46,13 +47,6 @@ __decorate([
     __metadata("design:paramtypes", [response_dto_1.ResponseDto]),
     __metadata("design:returntype", Promise)
 ], ResponseController.prototype, "add", null);
-__decorate([
-    (0, common_1.Post)('authorization'),
-    __param(0, (0, common_1.Body)(new common_1.ValidationPipe())),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [attempterKey_dto_1.AttempterKeyDto]),
-    __metadata("design:returntype", Promise)
-], ResponseController.prototype, "checkValidity", null);
 exports.ResponseController = ResponseController = __decorate([
     (0, common_1.Controller)('response'),
     __metadata("design:paramtypes", [response_service_1.ResponseService])
