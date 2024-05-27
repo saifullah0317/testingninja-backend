@@ -4,7 +4,7 @@ import * as mongoose from 'mongoose';
 import { Attempter } from './attempter.schema';
 import { Question } from './question.schema';
 
-@Schema()
+@Schema({ _id: false })
 export class SingleResponse {
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Question' })
     questionid: Question;

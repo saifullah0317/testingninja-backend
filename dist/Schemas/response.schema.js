@@ -26,7 +26,7 @@ __decorate([
     __metadata("design:type", String)
 ], SingleResponse.prototype, "response", void 0);
 exports.SingleResponse = SingleResponse = __decorate([
-    (0, mongoose_1.Schema)()
+    (0, mongoose_1.Schema)({ _id: false })
 ], SingleResponse);
 exports.SingleResponseSchema = mongoose_1.SchemaFactory.createForClass(SingleResponse);
 let Response = class Response {
