@@ -148,13 +148,13 @@ let TestService = class TestService {
             const foundAttempter = await this.attempterService.getbyEmail(email);
             const foundTest = await this.testModel.findOne({ key: key });
             let attempterId;
-            if (foundTest._id) {
+            if (foundTest) {
                 if (!foundTest.active) {
                     return { message: "Test not available to attempt !" };
                 }
                 else {
                     if (foundTest.allowAll) {
-                        if (foundAttempter._id) {
+                        if (foundAttempter) {
                             attempterId = foundAttempter._id;
                         }
                         else {
@@ -166,8 +166,6 @@ let TestService = class TestService {
                         if (foundTest.attempterListid) {
                             for (let i = 0; i < foundTest.attempterListid.length; i++) {
                                 let attempterList = await this.attempterListService.getByListId(foundTest.attempterListid[i].toString());
-                                console.log("attempterList: ", attempterList);
-                                console.log("foundAttempter: ", foundAttempter);
                                 if (attempterList.includes(foundAttempter._id)) {
                                     attempterId = foundAttempter._id;
                                     i = foundTest.attempterListid.length;

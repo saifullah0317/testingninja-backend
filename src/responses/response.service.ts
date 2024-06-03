@@ -59,10 +59,10 @@ export class ResponseService {
   //   }
   // }
 
-  async add(createquestionDto: ResponseDto): Promise<Response> {
+  async add(createResponseDto: ResponseDto): Promise<Response> {
     try {
-      const createdTest = new this.responseModel(createquestionDto);
-      return createdTest.save();
+      const createdResponse = new this.responseModel(createResponseDto);
+      return (await createdResponse.save()).populate('responses.questionid');
     } catch (error) {
       throw new HttpException(error, HttpStatus.BAD_REQUEST);
     }

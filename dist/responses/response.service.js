@@ -42,10 +42,10 @@ let ResponseService = class ResponseService {
             }).populate('attempterid');
         }
     }
-    async add(createquestionDto) {
+    async add(createResponseDto) {
         try {
-            const createdTest = new this.responseModel(createquestionDto);
-            return createdTest.save();
+            const createdResponse = new this.responseModel(createResponseDto);
+            return (await createdResponse.save()).populate('responses.questionid');
         }
         catch (error) {
             throw new common_1.HttpException(error, common_1.HttpStatus.BAD_REQUEST);

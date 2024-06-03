@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
 import { Attempter } from './attempter.schema';
 import { Question } from './question.schema';
+import { Test } from './test.schema';
 export declare class SingleResponse {
     questionid: Question;
     response: string;
@@ -12,6 +13,7 @@ export declare const SingleResponseSchema: mongoose.Schema<SingleResponse, mongo
 }>;
 export declare class Response {
     attempterid: Attempter;
+    testid: Test;
     responses: SingleResponse[];
 }
 export declare const ResponseSchema: mongoose.Schema<Response, mongoose.Model<Response, any, any, any, mongoose.Document<unknown, any, Response> & Response & {

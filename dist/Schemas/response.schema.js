@@ -14,6 +14,7 @@ const mongoose_1 = require("@nestjs/mongoose");
 const mongoose = require("mongoose");
 const attempter_schema_1 = require("./attempter.schema");
 const question_schema_1 = require("./question.schema");
+const test_schema_1 = require("./test.schema");
 let SingleResponse = class SingleResponse {
 };
 exports.SingleResponse = SingleResponse;
@@ -36,6 +37,10 @@ __decorate([
     (0, mongoose_1.Prop)({ type: mongoose.Schema.Types.ObjectId, ref: 'Attempter' }),
     __metadata("design:type", attempter_schema_1.Attempter)
 ], Response.prototype, "attempterid", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: mongoose.Schema.Types.ObjectId, ref: 'Test' }),
+    __metadata("design:type", test_schema_1.Test)
+], Response.prototype, "testid", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ type: [exports.SingleResponseSchema] }),
     __metadata("design:type", Array)

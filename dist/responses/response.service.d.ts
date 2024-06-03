@@ -11,5 +11,5 @@ export declare class ResponseService {
     private readonly testService;
     constructor(responseModel: Model<Response>, attempterService: AttempterService, questionService: QuestionService, testService: TestService);
     get(query: any): Promise<Response[]>;
-    add(createquestionDto: ResponseDto): Promise<Response>;
+    add(createResponseDto: ResponseDto): Promise<Response>;
 }
